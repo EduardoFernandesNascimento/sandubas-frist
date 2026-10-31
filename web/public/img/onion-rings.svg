@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Onion rings"><circle cx="60" cy="60" r="56" fill="#f3dd8a"/><g stroke="#3b2a1a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" fill="none">
+<ellipse cx="42" cy="72" rx="24" ry="18" stroke-width="13"/>
+<ellipse cx="78" cy="72" rx="24" ry="18" stroke-width="13"/>
+<ellipse cx="60" cy="44" rx="24" ry="18" stroke-width="13"/>
+</g><g fill="none" stroke="#e9a23b" stroke-width="8">
+<ellipse cx="42" cy="72" rx="24" ry="18"/><ellipse cx="78" cy="72" rx="24" ry="18"/><ellipse cx="60" cy="44" rx="24" ry="18"/>
+</g></svg>

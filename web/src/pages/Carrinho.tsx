@@ -4,6 +4,7 @@ import type { Loja } from '../../../shared/tipos'
 import { precoUnitario, useCarrinho } from '../contexts/CarrinhoContext'
 import { api } from '../services/api'
 import { moeda } from '../services/formatar'
+import { FotoProduto } from '../components/FotoProduto'
 
 export const PEDIDO_MINIMO_PADRAO = 10
 
@@ -36,6 +37,7 @@ export function Carrinho() {
           <ul className="lista">
             {itens.map((i) => (
               <li key={i.chave} className="item-carrinho">
+                <FotoProduto foto={i.produto.foto} nome={i.produto.nome} tamanho="pequena" />
                 <div className="item-texto">
                   <strong>{i.produto.nome}</strong>
                   {i.adicionais.length > 0 && (

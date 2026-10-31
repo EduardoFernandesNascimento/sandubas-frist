@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import type { DisponibilidadeEntrada, Entrega, Entregador, StatusEntrada } from '../../../shared/tipos'
+import type { DisponibilidadeEntrada, Entrega, Entregador, StatusEntrada, Usuario } from '../../../shared/tipos'
+import { Logo } from '../components/Logo'
+import { useSessao } from '../contexts/SessaoContext'
 import { Historico } from '../components/Historico'
 import { api, mensagemDeErro } from '../services/api'
 import { moeda, rotuloPagamento, rotuloStatus } from '../services/formatar'
@@ -8,7 +10,12 @@ import { usePolling } from '../services/polling'
 // Tela do entregador: REQ-030, REQ-031, REQ-032, REQ-045.
 export function Entregas() {
   const [entregas, setEntregas] = useState<Entrega[]>([])
-  const [disponivel, setDisponivel] = useState<boolean | null>(null)
+  const { usuario } = useSessao()
+  // AUD-002: estado inicial vem do usuário logado (se o login trouxer `disponivel`);
+  // senão "Disponível", o padrão do db.json, até o primeiro PATCH confirmar.
+  const [disponivel, setDisponivel] = useState<boolean>(
+    () => (usuario as (Usuario & { disponivel?: boolean }) | null)?.disponivel ?? true,
+  )
   const [carregando, setCarregando] = useState(true)
   const [erro, setErro] = useState('')
   const [ocupado, setOcupado] = useState(false)
@@ -58,20 +65,23 @@ export function Entregas() {
 
   return (
     <main className="pagina">
-      <h1>Entregas</h1>
+      <div className="cabeca-pagina">
+        <Logo />
+        <h1>Entregas</h1>
+      </div>
       <div className="sub-form">
         <p>
           Situação:{' '}
-          <strong>{disponivel === null ? 'escolha abaixo' : disponivel ? 'Disponível' : 'Indisponível'}</strong>
+          <strong>{disponivel ? 'Disponível' : 'Indisponível'}</strong>
         </p>
         <div className="acoes">
-          <button type="button" aria-pressed={disponivel === true} disabled={ocupado} onClick={() => marcar(true)}>
+          <button type="button" aria-pressed={disponivel} disabled={ocupado} onClick={() => marcar(true)}>
             Disponível
           </button>
           <button
             type="button"
             className="secundario"
-            aria-pressed={disponivel === false}
+            aria-pressed={!disponivel}
             disabled={ocupado}
             onClick={() => marcar(false)}
           >

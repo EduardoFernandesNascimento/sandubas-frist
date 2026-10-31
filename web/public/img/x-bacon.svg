@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="X-Bacon"><circle cx="60" cy="60" r="56" fill="#f3dd8a"/><g stroke="#3b2a1a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+<path d="M24 50 Q24 20 60 20 Q96 20 96 50 Z" fill="#f2b632"/>
+<path d="M22 54 Q34 47 44 54 Q54 47 64 54 Q74 47 84 54 Q92 49 98 54 L98 58 L22 58 Z" fill="#5fae3b"/>
+<rect x="22" y="58" width="76" height="10" rx="5" fill="#7a4424"/>
+<path d="M20 70 Q30 64 40 70 Q50 76 60 70 Q70 64 80 70 Q90 76 100 70 L100 76 Q90 82 80 76 Q70 70 60 76 Q50 82 40 76 Q30 70 20 76 Z" fill="#c8322b"/>
+<path d="M26 78 L94 78 L84 86 L76 80 Z" fill="#ffd23f"/>
+<rect x="22" y="82" width="76" height="10" rx="5" fill="#7a4424"/>
+<path d="M24 94 L96 94 Q96 104 84 104 L36 104 Q24 104 24 94 Z" fill="#f2b632"/>
+</g><g fill="#fff6d5"><ellipse cx="46" cy="32" rx="3" ry="1.6"/><ellipse cx="62" cy="28" rx="3" ry="1.6"/><ellipse cx="76" cy="36" rx="3" ry="1.6"/></g></svg>

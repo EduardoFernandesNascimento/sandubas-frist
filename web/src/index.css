@@ -1,9 +1,14 @@
-/* Cores da marca (RNF02): dourado, vermelho e laranja. */
+/* Cores da marca (RNF02), tiradas da logo (web/public/logo.png):
+   fundo circular dourado, batata e letreiro vermelhos, copo laranja, contorno marrom. */
 :root {
-  --dourado: #d4a017;
-  --vermelho: #b3261e;
-  --laranja: #e8650a;
-  --texto: #2b1d0e;
+  --dourado: #d9b44a;
+  --dourado-escuro: #b8902a;
+  --dourado-claro: #f3dd8a;
+  --vermelho: #b3191e;
+  --vermelho-escuro: #8a1216;
+  --laranja: #e8740c;
+  --marrom: #3b2a1a;
+  --texto: var(--marrom);
   --fundo: #fff8ec;
   font-family: system-ui, "Segoe UI", Roboto, sans-serif;
   color: var(--texto);
@@ -23,11 +28,11 @@ a { color: var(--vermelho); }
   justify-content: space-between;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: linear-gradient(90deg, var(--vermelho), #b8470a);
+  background: linear-gradient(90deg, var(--vermelho), var(--vermelho-escuro));
   color: #fff;
   border-bottom: 4px solid var(--dourado);
 }
-.marca { font-weight: 800; font-size: 1.25rem; }
+.marca { display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.25rem; letter-spacing: 0.02em; }
 .menu { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
 .menu a { color: #fff; text-decoration: none; font-weight: 600; }
 .menu a.active { text-decoration: underline; text-decoration-color: var(--dourado); text-decoration-thickness: 3px; }
@@ -58,12 +63,12 @@ button {
   border-radius: 4px;
   cursor: pointer;
 }
-button:hover { background: #8f1e18; }
+button:hover { background: var(--vermelho-escuro); }
 button:disabled { opacity: 0.6; cursor: not-allowed; }
 button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid var(--dourado); outline-offset: 2px; }
 
 .botao-sair { background: var(--dourado); color: var(--texto); }
-.botao-sair:hover { background: #b88a10; }
+.botao-sair:hover { background: var(--dourado-escuro); }
 button.link { background: none; color: var(--vermelho); padding: 0; text-decoration: underline; font-weight: 400; }
 button.link:hover { background: none; color: #8f1e18; }
 
@@ -117,7 +122,7 @@ button.secundario:hover { background: #fbe0de; }
 .pedido-topo { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.5rem; }
 .pedido-topo h2 { margin: 0; }
 .itens { margin: 0.5rem 0; padding-left: 1.2rem; }
-.banner-status { background: #ffd9b8; border-left: 6px solid var(--laranja); color: #2b1d0e; font-weight: 700; padding: 0.6rem 0.75rem; border-radius: 6px; }
+.banner-status { background: #ffd9b8; border-left: 6px solid var(--laranja); border-right: 6px solid var(--dourado); color: #2b1d0e; font-weight: 700; padding: 0.6rem 0.75rem; border-radius: 6px; }
 .status { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; background: #fdebc8; color: var(--texto); }
 .status-recebido, .status-em_preparo { background: #fff1c9; }
 .status-saiu_para_entrega, .status-pronto { background: #ffd9b8; }
@@ -135,3 +140,38 @@ button.secundario:hover { background: #fbe0de; }
 .emoji { font-size: 2rem; }
 address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 button[aria-pressed="true"] { outline: 3px solid var(--dourado); }
+
+/* F-004: logo, ilustrações dos produtos, "Meu token" e ajustes de identidade visual (RNF02). */
+.logo { display: block; }
+.logo-destaque { width: 100%; max-width: 280px; height: auto; aspect-ratio: 4 / 3; margin: -1rem auto 0; object-fit: cover; }
+.logo-pequena { width: 44px; height: 44px; object-fit: cover; object-position: 50% 35%; border-radius: 50%; background: #fff; border: 2px solid var(--dourado); }
+.cabeca-pagina { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+.cabeca-pagina .logo-destaque { max-width: 180px; margin: -0.5rem 0 0; }
+.cabeca-pagina h1 { margin: 0; }
+.cartao h1 { text-align: center; }
+
+.foto { display: block; flex-shrink: 0; object-fit: contain; border-radius: 8px; background: var(--dourado-claro); text-align: center; }
+.foto-grande { width: 100%; height: 140px; font-size: 3.5rem; line-height: 140px; }
+.foto-media { width: 120px; height: 120px; margin: 0 auto 0.5rem; font-size: 3.5rem; line-height: 120px; border-radius: 50%; }
+.foto-pequena { width: 56px; height: 56px; font-size: 2rem; line-height: 56px; }
+.produto { border-color: var(--dourado); }
+.produto:hover { border-color: var(--laranja); }
+.preco { color: var(--vermelho); }
+.menu a:hover { color: var(--dourado-claro); }
+.pedido.destaque { border-color: var(--laranja); }
+
+.codigo { background: var(--marrom); color: #fff6d5; padding: 0.75rem; border-radius: 6px; overflow-x: auto; font-family: ui-monospace, Consolas, monospace; font-size: 0.85rem; }
+.token-bruto { word-break: break-all; }
+.jwt-h { color: #ffb4a8; }
+.jwt-p { color: #f3dd8a; }
+.jwt-a { color: #9fd8ff; }
+.linha-resumo { display: contents; }
+
+@media (max-width: 480px) {
+  .topo { padding: 0.5rem 0.75rem; }
+  .marca { font-size: 1.05rem; }
+  .menu { gap: 0.5rem; font-size: 0.95rem; }
+  .grade { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; }
+  .foto-grande { height: 110px; line-height: 110px; }
+  .cabeca-pagina .logo-destaque { max-width: 140px; }
+}

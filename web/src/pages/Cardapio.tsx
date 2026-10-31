@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 import type { Adicional, Loja, Produto } from '../../../shared/tipos'
 import { precoUnitario, useCarrinho } from '../contexts/CarrinhoContext'
 import { api, mensagemDeErro } from '../services/api'
-import { ehUrl, moeda } from '../services/formatar'
+import { moeda } from '../services/formatar'
+import { FotoProduto } from '../components/FotoProduto'
+import { Logo } from '../components/Logo'
 
 // REQ-003: categorias do cardápio, nesta ordem.
 const CATEGORIAS: { chave: string; titulo: string }[] = [
@@ -13,16 +15,6 @@ const CATEGORIAS: { chave: string; titulo: string }[] = [
   { chave: 'combos', titulo: 'Combos' },
   { chave: 'sobremesas', titulo: 'Sobremesas' },
 ]
-
-function Foto({ foto, nome }: { foto: string; nome: string }) {
-  if (!foto) return <span className="foto" aria-hidden="true">🍔</span>
-  if (ehUrl(foto)) return <img className="foto" src={foto} alt={nome} />
-  return (
-    <span className="foto" role="img" aria-label={nome}>
-      {foto}
-    </span>
-  )
-}
 
 export function Cardapio() {
   const [produtos, setProdutos] = useState<Produto[]>([])
@@ -55,7 +47,10 @@ export function Cardapio() {
 
   return (
     <main className="pagina larga">
-      <h1>Cardápio</h1>
+      <div className="cabeca-pagina">
+        <Logo />
+        <h1>Cardápio</h1>
+      </div>
       {fechada && (
         <p className="aviso fechado" role="alert">
           <strong>Fechado.</strong> A loja não está aceitando pedidos agora.
@@ -82,7 +77,7 @@ export function Cardapio() {
           <ul className="grade">
             {g.itens.map((p) => (
               <li key={p.id} className="produto">
-                <Foto foto={p.foto} nome={p.nome} />
+                <FotoProduto foto={p.foto} nome={p.nome} />
                 <div className="produto-info">
                   <h3>{p.nome}</h3>
                   <p className="descricao">{p.descricao}</p>
@@ -171,6 +166,7 @@ function Personalizar({
         aria-labelledby="titulo-personalizar"
         onClick={(e) => e.stopPropagation()}
       >
+        <FotoProduto foto={produto.foto} nome={produto.nome} tamanho="media" />
         <h2 id="titulo-personalizar">{produto.nome}</h2>
         <p className="descricao">{produto.descricao}</p>
         <form onSubmit={confirmar}>

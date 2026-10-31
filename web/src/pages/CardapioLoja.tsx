@@ -1,7 +1,8 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import type { Adicional, Produto, ProdutoAtivoEntrada, ProdutoEntrada } from '../../../shared/tipos'
 import { api, mensagemDeErro } from '../services/api'
-import { ehUrl, moeda } from '../services/formatar'
+import { moeda } from '../services/formatar'
+import { FotoProduto } from '../components/FotoProduto'
 
 interface Form {
   nome: string
@@ -144,7 +145,7 @@ export function CardapioLoja() {
             <textarea {...campo('descricao')} rows={2} />
           </label>
           <label>
-            Foto (emoji)
+            Foto (emoji ou caminho, ex.: /img/x-burguer.svg)
             <input {...campo('foto')} />
           </label>
           <label>
@@ -174,13 +175,7 @@ export function CardapioLoja() {
       <ul className="lista">
         {produtos.map((p) => (
           <li key={p.id} className={`item-carrinho${p.ativo ? '' : ' pausado'}`}>
-            {ehUrl(p.foto) ? (
-              <img src={p.foto} alt="" width={40} height={40} />
-            ) : (
-              <span aria-hidden="true" className="emoji">
-                {p.foto}
-              </span>
-            )}
+            <FotoProduto foto={p.foto} nome={p.nome} tamanho="pequena" />
             <div className="item-texto">
               <strong>{p.nome}</strong> · {moeda(p.preco)}
               <p className="detalhe">
