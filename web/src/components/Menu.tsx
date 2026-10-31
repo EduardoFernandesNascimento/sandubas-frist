@@ -10,7 +10,11 @@ const links: Record<Perfil, { para: string; texto: string }[]> = {
     { para: '/cliente/carrinho', texto: 'Carrinho' },
     { para: '/cliente/pedidos', texto: 'Meus pedidos' },
   ],
-  loja: [{ para: '/loja', texto: 'Painel da loja' }],
+  loja: [
+    { para: '/loja', texto: 'Pedidos' },
+    { para: '/loja/cardapio', texto: 'Cardápio' },
+    { para: '/loja/taxas', texto: 'Taxas' },
+  ],
   entregador: [{ para: '/entregas', texto: 'Entregas' }],
 }
 

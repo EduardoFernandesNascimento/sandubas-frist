@@ -1,0 +1,8 @@
+# EV-024 · http
+# comando: curl -s -f -X PATCH http://localhost:3099/pedidos/3/status -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5vbWUiOiJFbnRyZWdhZG9yIERlbW8iLCJwZXJmaWwiOiJlbnRyZWdhZG9yIiwiaWF0IjoxNzkzNDYwNTMwLCJleHAiOjE3OTM0NjQxMzB9.xB7WrU6uIe0UJZKRaUeADMHj2i4u6kuTV3KAr5nDz5I' -H 'Content-Type: application/json' -d '{"status":"entregue"}'
+# shell: bash
+# início: 2026-10-31T15:29:05.532Z
+# fim: 2026-10-31T15:29:05.587Z (0.1 s)
+# resultado: regex "status":"(\w+)"
+# código de saída: 0
+{"id":3,"clienteId":1,"entregadorId":3,"enderecoId":1,"itens":[{"produtoId":1,"nome":"X-Burguer Frist","quantidade":1,"precoUnitario":22.9,"adicionais":[{"nome":"Bacon","preco":4}],"removidos":["cebola"],"observacao":"bem passado"}],"taxaEntrega":5,"total":31.9,"formaPagamento":"dinheiro","trocoPara":50,"status":"entregue","criadoEm":"2026-10-31T15:28:08.993Z","historico":[{"status":"aguardando_pagamento","em":"2026-10-31T15:28:08.993Z"},{"status":"recebido","em":"2026-10-31T15:28:25.630Z"},{"status":"em_preparo","em":"2026-10-31T15:28:40.526Z"},{"status":"pronto","em":"2026-10-31T15:28:40.694Z"},{"status":"saiu_para_entrega","em":"2026-10-31T15:29:05.406Z"},{"status":"entregue","em":"2026-10-31T15:29:05.581Z"}]}
