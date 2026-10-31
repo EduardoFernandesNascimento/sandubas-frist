@@ -1,0 +1,11 @@
+# EV-011 · codigo
+# comando: grep -n -e @demo.com -e '"disponivel"' api/db.json
+# shell: bash
+# início: 2026-10-31T20:36:53.074Z
+# fim: 2026-10-31T20:36:53.106Z (0.0 s)
+# resultado: última linha
+# código de saída: 0
+4:    {"id":1,"nome":"Cliente Demo","email":"cliente@demo.com","perfil":"cliente","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0001"},
+5:    {"id":2,"nome":"Loja Demo","email":"loja@demo.com","perfil":"loja","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0002"},
+6:    {"id":3,"nome":"Entregador Demo","email":"entregador@demo.com","perfil":"entregador","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0003","disponivel":true},
+7:    {"id":4,"nome":"Entregador Dois","email":"entregador2@demo.com","perfil":"entregador","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0004","disponivel":true}

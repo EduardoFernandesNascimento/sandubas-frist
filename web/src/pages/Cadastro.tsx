@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import type { Usuario } from '../../../shared/tipos'
 import { useSessao } from '../contexts/SessaoContext'
 import { api, mensagemDeErro } from '../services/api'
+import { Logo } from '../components/Logo'
 
 // RF01 (REQ-001): cadastro de cliente; depois entra direto.
 export function Cadastro() {
@@ -31,6 +32,7 @@ export function Cadastro() {
 
   return (
     <main className="cartao">
+      <Logo />
       <h1>Criar conta</h1>
       <form onSubmit={enviar}>
         <label>

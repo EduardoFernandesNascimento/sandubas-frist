@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="X-Burguer"><circle cx="60" cy="60" r="56" fill="#f3dd8a"/><g stroke="#3b2a1a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+<path d="M24 58 Q24 28 60 28 Q96 28 96 58 Z" fill="#f2b632"/>
+<path d="M22 62 Q34 54 44 62 Q54 54 64 62 Q74 54 84 62 Q92 56 98 62 L98 66 L22 66 Z" fill="#5fae3b"/>
+<path d="M26 64 L94 64 L84 74 L76 66 Z" fill="#ffd23f"/>
+<rect x="22" y="68" width="76" height="12" rx="6" fill="#7a4424"/>
+<path d="M24 84 L96 84 Q96 96 84 96 L36 96 Q24 96 24 84 Z" fill="#f2b632"/>
+</g><g fill="#fff6d5"><ellipse cx="46" cy="40" rx="3" ry="1.6"/><ellipse cx="62" cy="36" rx="3" ry="1.6"/><ellipse cx="76" cy="44" rx="3" ry="1.6"/></g></svg>

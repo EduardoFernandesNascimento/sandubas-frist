@@ -1,0 +1,9 @@
+# EV-015 · codigo
+# comando: find api -name '*.test.ts' -not -path '*/node_modules/*'
+# shell: bash
+# início: 2026-10-31T20:37:21.562Z
+# fim: 2026-10-31T20:37:21.668Z (0.1 s)
+# resultado: última linha
+# código de saída: 0
+api/roteiro.test.ts
+api/server.test.ts

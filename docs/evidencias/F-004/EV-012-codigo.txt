@@ -1,0 +1,23 @@
+# EV-012 · codigo
+# comando: grep -n -e atob -e 'replace(/-/g' -e TextDecoder -e header -e payload.exp -e setInterval -e 'Tempo restante' -e meu-token web/src/pages/MeuToken.tsx web/src/App.tsx web/src/components/Menu.tsx
+# shell: bash
+# início: 2026-10-31T20:37:12.494Z
+# fim: 2026-10-31T20:37:12.528Z (0.0 s)
+# resultado: última linha
+# código de saída: 0
+web/src/pages/MeuToken.tsx:8:    const base64 = parte.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(parte.length / 4) * 4, '=')
+web/src/pages/MeuToken.tsx:9:    const binario = atob(base64)
+web/src/pages/MeuToken.tsx:11:    return JSON.parse(new TextDecoder().decode(bytes)) as Record<string, unknown>
+web/src/pages/MeuToken.tsx:33:    const id = window.setInterval(() => setAgora(Math.floor(Date.now() / 1000)), 1000)
+web/src/pages/MeuToken.tsx:38:  const header = partes.length === 3 ? decodificarParte(partes[0]) : null
+web/src/pages/MeuToken.tsx:41:  if (!header || !payload) {
+web/src/pages/MeuToken.tsx:52:  const exp = typeof payload.exp === 'number' ? payload.exp : null
+web/src/pages/MeuToken.tsx:59:        O navegador só <strong>lê</strong> o conteúdo do token: header e payload são apenas base64url. A{' '}
+web/src/pages/MeuToken.tsx:71:            Tempo restante: <strong>{restante(exp - agora)}</strong>
+web/src/pages/MeuToken.tsx:76:      <section aria-labelledby="titulo-header">
+web/src/pages/MeuToken.tsx:77:        <h2 id="titulo-header">Header</h2>
+web/src/pages/MeuToken.tsx:78:        <pre className="codigo">{JSON.stringify(header, null, 2)}</pre>
+web/src/App.tsx:37:        <Route path="/meu-token" element={<RotaProtegida perfis={['cliente', 'loja', 'entregador']}><MeuToken /></RotaProtegida>} />
+web/src/components/Menu.tsx:34:    <header className="topo">
+web/src/components/Menu.tsx:47:          <NavLink to="/meu-token" end>
+web/src/components/Menu.tsx:58:    </header>

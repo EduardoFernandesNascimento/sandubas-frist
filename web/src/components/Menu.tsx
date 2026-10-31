@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import type { Perfil } from '../../../shared/tipos'
 import { useCarrinho } from '../contexts/CarrinhoContext'
 import { useSessao } from '../contexts/SessaoContext'
+import { Logo } from './Logo'
 
 // Links do menu conforme o perfil (REQ-058).
 const links: Record<Perfil, { para: string; texto: string }[]> = {
@@ -31,7 +32,10 @@ export function Menu() {
 
   return (
     <header className="topo">
-      <span className="marca">Sanduba's Frist</span>
+      <span className="marca">
+        <Logo tamanho="pequena" />
+        <span>Sanduba's Frist</span>
+      </span>
       {usuario && (
         <nav aria-label="Menu principal" className="menu">
           {links[usuario.perfil].map((l) => (
@@ -40,6 +44,9 @@ export function Menu() {
               {l.para === '/cliente/carrinho' && quantidadeTotal > 0 && ` (${quantidadeTotal})`}
             </NavLink>
           ))}
+          <NavLink to="/meu-token" end>
+            Meu token
+          </NavLink>
           <span className="quem">
             {usuario.nome} ({usuario.perfil})
           </span>

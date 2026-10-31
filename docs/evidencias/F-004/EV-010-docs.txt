@@ -1,0 +1,29 @@
+# EV-010 · docs
+# comando: grep -n -e 'npm install' -e 'npm start' -e 'npm run dev' -e 'dois terminais' -e @demo.com -e 123456 -e JWT_EXPIRA_EM -e localStorage -e httpOnly -e '^[1-7]\. ' README.md
+# shell: bash
+# início: 2026-10-31T20:36:48.760Z
+# fim: 2026-10-31T20:36:48.800Z (0.0 s)
+# resultado: última linha
+# código de saída: 0
+14:Abra **dois terminais** e deixe os dois rodando ao mesmo tempo.
+20:npm install
+21:npm start
+28:npm install
+29:npm run dev
+38:Senha de todos: `123456`
+42:| Cliente | `cliente@demo.com` |
+43:| Loja | `loja@demo.com` |
+44:| Entregador | `entregador@demo.com` |
+45:| Entregador (segundo) | `entregador2@demo.com` |
+49:1. Tentar abrir a área do cliente sem login (http://localhost:5173/cliente) → o React redireciona para o login. *(conferência manual)*
+50:2. Logar como cliente → mostrar o JWT recebido e o payload decodificado.
+51:3. Montar e confirmar um pedido → a requisição leva o cabeçalho `Authorization: Bearer <token>`.
+52:4. Com o token de cliente, chamar `GET /pedidos` → a API responde 403.
+53:5. Logar como loja → aceitar o pedido e mudar os status.
+54:6. Logar como entregador → confirmar a entrega; o cliente vê "Entregue".
+55:7. Esperar o token expirar → a próxima ação retorna 401 e volta ao login.
+61:O token vale **5 minutos** por padrão. Para mudar, defina `JWT_EXPIRA_EM` antes de subir a API (aceita `30s`, `1m`, `2h`...):
+65:JWT_EXPIRA_EM=1m npm start
+68:No PowerShell: `$env:JWT_EXPIRA_EM="1m"; npm start`. Um valor curto ajuda a mostrar o passo 7 do roteiro.
+73:- O token fica no `localStorage` do navegador. Isso foi **aceito para a demonstração**, porque é simples de mostrar e de inspecionar.
+74:- Em produção, guardar o token num **cookie `httpOnly`** reduz o risco de roubo do token por XSS, já que o JavaScript da página não consegue ler esse cookie.

@@ -9,6 +9,7 @@ import { Checkout } from './pages/Checkout'
 import { CardapioLoja } from './pages/CardapioLoja'
 import { Entregas } from './pages/Entregas'
 import { Login } from './pages/Login'
+import { MeuToken } from './pages/MeuToken'
 import { MeusPedidos } from './pages/MeusPedidos'
 import { PainelLoja } from './pages/PainelLoja'
 import { TaxasLoja } from './pages/TaxasLoja'
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/loja/cardapio" element={<RotaProtegida perfis={['loja']}><CardapioLoja /></RotaProtegida>} />
         <Route path="/loja/taxas" element={<RotaProtegida perfis={['loja']}><TaxasLoja /></RotaProtegida>} />
         <Route path="/entregas" element={<RotaProtegida perfis={['entregador']}><Entregas /></RotaProtegida>} />
+        <Route path="/meu-token" element={<RotaProtegida perfis={['cliente', 'loja', 'entregador']}><MeuToken /></RotaProtegida>} />
         <Route path="*" element={<Raiz />} />
       </Routes>
     </>

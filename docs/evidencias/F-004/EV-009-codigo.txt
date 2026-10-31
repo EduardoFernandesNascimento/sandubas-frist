@@ -1,0 +1,28 @@
+# EV-009 · codigo
+# comando: node C:/Users/duduf/AppData/Local/Temp/claude/c--Users-duduf-Desktop-Sanduba-s-Frist/49cd6ab5-650d-4a0e-92ac-7e7c0853f5dc/scratchpad/conferir-svgs.mjs
+# shell: bash
+# início: 2026-10-31T20:36:45.664Z
+# fim: 2026-10-31T20:36:45.752Z (0.1 s)
+# resultado: regex (conferencia ok: \d+ svgs validos)
+# código de saída: 0
+OK   batata.svg svg=true viewBox=true script=false hrefExterno=false
+OK   brownie.svg svg=true viewBox=true script=false hrefExterno=false
+OK   combo.svg svg=true viewBox=true script=false hrefExterno=false
+OK   onion-rings.svg svg=true viewBox=true script=false hrefExterno=false
+OK   refrigerante.svg svg=true viewBox=true script=false hrefExterno=false
+OK   sanduba-frango.svg svg=true viewBox=true script=false hrefExterno=false
+OK   suco.svg svg=true viewBox=true script=false hrefExterno=false
+OK   x-bacon.svg svg=true viewBox=true script=false hrefExterno=false
+OK   x-burguer.svg svg=true viewBox=true script=false hrefExterno=false
+OK   produto 1 X-Burguer Frist -> /img/x-burguer.svg
+OK   produto 2 X-Bacon Duplo -> /img/x-bacon.svg
+OK   produto 3 Sanduba de Frango -> /img/sanduba-frango.svg
+OK   produto 4 Batata Frita -> /img/batata.svg
+OK   produto 5 Onion Rings -> /img/onion-rings.svg
+OK   produto 6 Refrigerante Lata -> /img/refrigerante.svg
+OK   produto 7 Suco Natural -> /img/suco.svg
+OK   produto 8 Combo Frist (X-Burguer + Batata + Refri) -> /img/combo.svg
+OK   produto 9 Combo Família -> /img/combo.svg
+OK   produto 10 Brownie com Sorvete -> /img/brownie.svg
+svgs: 9; produtos: 10; svgs sem produto: nenhum
+conferencia ok: 9 svgs validos

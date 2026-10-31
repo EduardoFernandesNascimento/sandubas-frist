@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { inicioDoPerfil, useSessao } from '../contexts/SessaoContext'
 import { CHAVE_AVISO, mensagemDeErro } from '../services/api'
+import { Logo } from '../components/Logo'
 
 // Usuários fictícios da demonstração (DOC-01 p.8).
 const usuariosTeste = [
@@ -47,6 +48,7 @@ export function Login() {
 
   return (
     <main className="cartao">
+      <Logo />
       <h1>Entrar</h1>
       {aviso && <p className="aviso" role="status">{aviso}</p>}
       <form onSubmit={enviar}>

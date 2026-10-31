@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Brownie com sorvete"><circle cx="60" cy="60" r="56" fill="#f3dd8a"/><g stroke="#3b2a1a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+<path d="M18 92 L102 92 L96 102 L24 102 Z" fill="#ead6b8"/>
+<path d="M26 60 L94 60 L94 90 L26 90 Z" fill="#5a3218"/>
+<path d="M26 60 L40 50 L108 50 L94 60 Z" fill="#7a4424"/>
+<path d="M94 60 L108 50 L108 80 L94 90 Z" fill="#4a2812"/>
+<circle cx="66" cy="40" r="20" fill="#fff6d5"/>
+<path d="M50 50 Q54 58 58 50 Q62 58 66 52 Q70 58 74 50 Q78 58 82 50" fill="#fff6d5"/>
+<circle cx="70" cy="22" r="5" fill="#c8322b"/>
+</g><path d="M70 17 Q74 10 78 10" fill="none" stroke="#3b2a1a" stroke-width="2"/></svg>

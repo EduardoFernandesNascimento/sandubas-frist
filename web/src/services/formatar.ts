@@ -24,7 +24,3 @@ export const rotuloPagamento: Record<FormaPagamento, string> = {
   dinheiro: 'Dinheiro',
 }
 
-// Foto do produto: URL (http ou caminho local) vira <img>; o resto (emoji) vira texto.
-export function ehUrl(foto: string): boolean {
-  return /^(https?:\/\/|\/|\.\/)/.test(foto)
-}

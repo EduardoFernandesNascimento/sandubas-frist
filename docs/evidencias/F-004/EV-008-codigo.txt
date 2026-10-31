@@ -1,0 +1,12 @@
+# EV-008 · codigo
+# comando: grep -rn '<Logo' web/src
+# shell: bash
+# início: 2026-10-31T20:36:36.196Z
+# fim: 2026-10-31T20:36:36.259Z (0.1 s)
+# resultado: última linha
+# código de saída: 0
+web/src/components/Menu.tsx:36:        <Logo tamanho="pequena" />
+web/src/pages/Cadastro.tsx:35:      <Logo />
+web/src/pages/Cardapio.tsx:51:        <Logo />
+web/src/pages/Entregas.tsx:69:        <Logo />
+web/src/pages/Login.tsx:51:      <Logo />

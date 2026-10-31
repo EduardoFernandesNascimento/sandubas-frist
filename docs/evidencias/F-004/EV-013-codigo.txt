@@ -1,0 +1,45 @@
+# EV-013 · codigo
+# comando: grep -n -e --dourado -e --vermelho -e --laranja web/src/index.css
+# shell: bash
+# início: 2026-10-31T20:37:15.725Z
+# fim: 2026-10-31T20:37:15.767Z (0.0 s)
+# resultado: última linha
+# código de saída: 0
+4:  --dourado: #d9b44a;
+5:  --dourado-escuro: #b8902a;
+6:  --dourado-claro: #f3dd8a;
+7:  --vermelho: #b3191e;
+8:  --vermelho-escuro: #8a1216;
+9:  --laranja: #e8740c;
+20:h1 { color: var(--vermelho); margin-top: 0; }
+22:a { color: var(--vermelho); }
+31:  background: linear-gradient(90deg, var(--vermelho), var(--vermelho-escuro));
+33:  border-bottom: 4px solid var(--dourado);
+38:.menu a.active { text-decoration: underline; text-decoration-color: var(--dourado); text-decoration-thickness: 3px; }
+47:  border-top: 4px solid var(--dourado);
+61:  background: var(--vermelho);
+66:button:hover { background: var(--vermelho-escuro); }
+68:button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid var(--dourado); outline-offset: 2px; }
+70:.botao-sair { background: var(--dourado); color: var(--texto); }
+71:.botao-sair:hover { background: var(--dourado-escuro); }
+72:button.link { background: none; color: var(--vermelho); padding: 0; text-decoration: underline; font-weight: 400; }
+75:.erro { color: var(--vermelho); margin: 0; }
+76:.aviso { background: #fde7c8; border-left: 4px solid var(--laranja); padding: 0.5rem; }
+86:.categoria { font-size: 1.25rem; color: var(--vermelho); border-bottom: 3px solid var(--dourado); padding-bottom: 0.25rem; margin-top: 1.5rem; }
+92:.preco { font-weight: 700; color: var(--vermelho); margin: 0.25rem 0 0; }
+93:.aviso.fechado { background: #fbe0de; border-left-color: var(--vermelho); }
+94:.aviso.ok { background: #fff1c9; border-left-color: var(--dourado); }
+97:.modal { background: #fff; border-radius: 8px; border-top: 4px solid var(--dourado); padding: 1.25rem; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; }
+102:textarea:focus-visible, select:focus-visible { outline: 3px solid var(--dourado); outline-offset: 2px; }
+104:button.secundario { background: #fff; color: var(--vermelho); border: 2px solid var(--vermelho); }
+121:.pedido.destaque { background: #fff1c9; border-color: var(--laranja); }
+125:.banner-status { background: #ffd9b8; border-left: 6px solid var(--laranja); border-right: 6px solid var(--dourado); color: #2b1d0e; font-weight: 700; padding: 0.6rem 0.75rem; border-radius: 6px; }
+137:.historico summary { cursor: pointer; font-weight: 600; color: var(--vermelho); }
+142:button[aria-pressed="true"] { outline: 3px solid var(--dourado); }
+147:.logo-pequena { width: 44px; height: 44px; object-fit: cover; object-position: 50% 35%; border-radius: 50%; background: #fff; border: 2px solid var(--dourado); }
+153:.foto { display: block; flex-shrink: 0; object-fit: contain; border-radius: 8px; background: var(--dourado-claro); text-align: center; }
+157:.produto { border-color: var(--dourado); }
+158:.produto:hover { border-color: var(--laranja); }
+159:.preco { color: var(--vermelho); }
+160:.menu a:hover { color: var(--dourado-claro); }
+161:.pedido.destaque { border-color: var(--laranja); }

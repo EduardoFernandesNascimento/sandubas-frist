@@ -1,0 +1,8 @@
+# EV-019 · codigo
+# comando: grep -n -e 'path="C:/Program Files/Git/cliente"' -e 'Navigate to="/login"' web/src/App.tsx web/src/components/RotaProtegida.tsx
+# shell: bash
+# início: 2026-10-31T20:37:35.802Z
+# fim: 2026-10-31T20:37:35.844Z (0.0 s)
+# resultado: última linha
+# código de saída: 0
+web/src/components/RotaProtegida.tsx:9:  if (!token || !usuario) return <Navigate to="/login" replace />
