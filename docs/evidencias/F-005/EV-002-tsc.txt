@@ -1,0 +1,7 @@
+# EV-002 · tsc
+# comando: api/node_modules/.bin/tsc --noEmit -p api
+# shell: bash
+# início: 2026-10-31T21:11:59.279Z
+# fim: 2026-10-31T21:11:59.631Z (0.4 s)
+# resultado: última linha
+# código de saída: 0

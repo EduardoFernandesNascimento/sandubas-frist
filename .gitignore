@@ -4,3 +4,13 @@
 
 # Pasta local dos agentes (PROTOCOLO §7) — nunca vai para o remoto
 /.claude/
+
+# Dependências e artefatos de build
+node_modules/
+dist/
+coverage/
+
+# Variáveis de ambiente e logs
+.env
+.env.*
+*.log
