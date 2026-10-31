@@ -1,0 +1,12 @@
+# EV-030 · servidor
+# comando: npm run smoke --prefix api
+# shell: bash
+# início: 2026-10-31T14:02:27.918Z
+# fim: 2026-10-31T14:02:30.240Z (2.3 s)
+# resultado: última linha
+# código de saída: 0
+
+> sanduba-api@1.0.0 smoke
+> node smoke.mjs
+
+smoke ok: 200, 10 produtos

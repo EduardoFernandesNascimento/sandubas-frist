@@ -1,0 +1,21 @@
+# EV-028 · build
+# comando: npm run build --prefix web
+# shell: bash
+# início: 2026-10-31T14:00:30.139Z
+# fim: 2026-10-31T14:00:31.805Z (1.7 s)
+# resultado: última linha
+# código de saída: 0
+
+> web@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 88 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.46 kB │ gzip:   0.30 kB
+dist/assets/index-rIX4FjsV.css    2.03 kB │ gzip:   0.85 kB
+dist/assets/index-B4h_eeCG.js   322.56 kB │ gzip: 104.85 kB
+
+✓ built in 235ms

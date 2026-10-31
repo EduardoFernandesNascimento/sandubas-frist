@@ -1,0 +1,20 @@
+# EV-029 · vitest
+# comando: npm test --prefix api
+# shell: bash
+# início: 2026-10-31T14:02:14.163Z
+# fim: 2026-10-31T14:02:17.008Z (2.8 s)
+# resultado: última linha
+# código de saída: 0
+
+> sanduba-api@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 C:/Users/duduf/Desktop/Sanduba´s Frist/api
+
+
+ Test Files  1 passed (1)
+      Tests  11 passed (11)
+   Start at  11:02:15
+   Duration  1.55s (tests 78%, import 19%, transform 2%, worker 1%)
+
