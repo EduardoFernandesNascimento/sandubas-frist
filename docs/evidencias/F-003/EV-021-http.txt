@@ -1,0 +1,8 @@
+# EV-021 · http
+# comando: curl -s -f -X PATCH http://localhost:3099/entregadores/me -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsIm5vbWUiOiJFbnRyZWdhZG9yIERlbW8iLCJwZXJmaWwiOiJlbnRyZWdhZG9yIiwiaWF0IjoxNzkzNDYwNTMwLCJleHAiOjE3OTM0NjQxMzB9.xB7WrU6uIe0UJZKRaUeADMHj2i4u6kuTV3KAr5nDz5I' -H 'Content-Type: application/json' -d '{"disponivel":true}'
+# shell: bash
+# início: 2026-10-31T15:29:04.994Z
+# fim: 2026-10-31T15:29:05.054Z (0.1 s)
+# resultado: regex "disponivel":(\w+)
+# código de saída: 0
+{"id":3,"nome":"Entregador Demo","telefone":"(11) 90000-0003","disponivel":true}

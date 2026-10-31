@@ -1,0 +1,9 @@
+# EV-013 · http
+# comando: curl -s -w '\nHTTP %{http_code}\n' http://localhost:3099/pedidos -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5vbWUiOiJDbGllbnRlIERlbW8iLCJwZXJmaWwiOiJjbGllbnRlIiwiaWF0IjoxNzkzNDYwNDc4LCJleHAiOjE3OTM0NjQwNzh9.kfaVWyf_-ofHXCkvo8EOTVxHQkB7dlPmsae_cvvuhWI'
+# shell: bash
+# início: 2026-10-31T15:28:25.751Z
+# fim: 2026-10-31T15:28:25.804Z (0.1 s)
+# resultado: regex (HTTP \d+)
+# código de saída: 0
+{"mensagem":"Perfil sem permissão"}
+HTTP 403

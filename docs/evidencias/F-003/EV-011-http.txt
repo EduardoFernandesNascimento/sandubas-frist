@@ -1,0 +1,9 @@
+# EV-011 · http
+# comando: curl -s -w '\nHTTP %{http_code}\n' -X POST http://localhost:3099/pedidos -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5vbWUiOiJDbGllbnRlIERlbW8iLCJwZXJmaWwiOiJjbGllbnRlIiwiaWF0IjoxNzkzNDYwNDc4LCJleHAiOjE3OTM0NjQwNzh9.kfaVWyf_-ofHXCkvo8EOTVxHQkB7dlPmsae_cvvuhWI' -H 'Content-Type: application/json' -d '{"itens":[{"produtoId":1,"quantidade":1,"adicionais":["Bacon"],"removidos":["cebola"],"observacao":"bem passado"}],"enderecoId":1,"formaPagamento":"dinheiro","trocoPara":50}'
+# shell: bash
+# início: 2026-10-31T15:28:08.948Z
+# fim: 2026-10-31T15:28:08.999Z (0.1 s)
+# resultado: regex (HTTP 201|"id":\d+|"status":"\w+")
+# código de saída: 0
+{"id":3,"clienteId":1,"enderecoId":1,"itens":[{"produtoId":1,"nome":"X-Burguer Frist","quantidade":1,"precoUnitario":22.9,"adicionais":[{"nome":"Bacon","preco":4}],"removidos":["cebola"],"observacao":"bem passado"}],"taxaEntrega":5,"total":31.9,"formaPagamento":"dinheiro","trocoPara":50,"status":"aguardando_pagamento","criadoEm":"2026-10-31T15:28:08.993Z","historico":[{"status":"aguardando_pagamento","em":"2026-10-31T15:28:08.993Z"}]}
+HTTP 201

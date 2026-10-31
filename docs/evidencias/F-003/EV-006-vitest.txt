@@ -1,0 +1,20 @@
+# EV-006 · vitest
+# comando: npm test --prefix api
+# shell: bash
+# início: 2026-10-31T15:06:37.230Z
+# fim: 2026-10-31T15:06:46.521Z (9.3 s)
+# resultado: regex (\d+ passed \(\d+\))
+# código de saída: 0
+
+> sanduba-api@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 C:/Users/duduf/Desktop/Sanduba´s Frist/api
+
+
+ Test Files  1 passed (1)
+      Tests  50 passed (50)
+   Start at  12:06:38
+   Duration  8.34s (tests 97%, import 3%)
+
