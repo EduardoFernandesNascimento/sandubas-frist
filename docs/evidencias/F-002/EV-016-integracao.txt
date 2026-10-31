@@ -1,0 +1,19 @@
+# EV-016 · integracao
+# comando: curl -s -i -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5vbWUiOiJDbGllbnRlIERlbW8iLCJwZXJmaWwiOiJjbGllbnRlIiwiaWF0IjoxNzkzNDU3NTA1LCJleHAiOjE3OTM0NjExMDV9.wjwYa32Mw2_7jgBAB7JtLiA1f2-Fp40wFnRpsufiU-E' -H 'Content-Type: application/json' -d '{"aprovado":true}' http://127.0.0.1:3997/pedidos/3/pagamento
+# shell: bash
+# início: 2026-10-31T14:39:15.439Z
+# fim: 2026-10-31T14:39:15.490Z (0.1 s)
+# resultado: regex HTTP/1.1 (\d+)
+# código de saída: 0
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 373
+ETag: W/"175-DZLcScqwHer6RwtrPhpUYCz4ONI"
+Date: Sat, 31 Oct 2026 14:39:15 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"id":3,"clienteId":1,"enderecoId":2,"itens":[{"produtoId":1,"quantidade":2,"precoUnitario":22.9,"adicionais":[{"nome":"Bacon","preco":4}],"removidos":["cebola"],"observacao":"bem passado"},{"produtoId":6,"quantidade":1,"precoUnitario":6}],"taxaEntrega":6.5,"total":66.3,"formaPagamento":"dinheiro","trocoPara":100,"status":"recebido","criadoEm":"2026-10-31T14:38:59.082Z"}
