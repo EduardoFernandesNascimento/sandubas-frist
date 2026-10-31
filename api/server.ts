@@ -7,10 +7,11 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
 import type {
-  Adicional, Bairro, Endereco, FormaPagamento, ItemPedido, JwtPayload, Loja, Pedido, Perfil, Produto, RespostaLogin, Usuario,
+  Adicional, Bairro, Endereco, Entrega, Entregador, FormaPagamento, ItemPedido, JwtPayload, Loja, Pedido, Perfil, Produto,
+  RespostaLogin, StatusPedido, Usuario,
 } from '../shared/tipos';
 
-interface UsuarioDb extends Usuario { senhaHash: string }
+interface UsuarioDb extends Usuario { senhaHash: string; disponivel?: boolean }
 interface Db { loja: Loja; usuarios: UsuarioDb[]; produtos: Produto[]; pedidos: Pedido[]; bairros: Bairro[]; enderecos: Endereco[] }
 
 const pasta = dirname(fileURLToPath(import.meta.url));
@@ -23,7 +24,9 @@ const segredo = () => process.env.JWT_SEGREDO ?? 'segredo-de-demonstracao';
 const expiraEm = () => process.env.JWT_EXPIRA_EM ?? '5m'; // HUM-001 [REQ-062]
 
 // Só as chaves do contrato (MEM-001): nunca devolve senhaHash.
-const publico = (u: UsuarioDb): Usuario => ({ id: u.id, nome: u.nome, email: u.email, perfil: u.perfil });
+const publico = (u: UsuarioDb): Usuario => ({
+  id: u.id, nome: u.nome, email: u.email, perfil: u.perfil, ...(u.telefone !== undefined && { telefone: u.telefone }),
+});
 const erro = (res: Response, status: number, mensagem: string) => res.status(status).json({ mensagem });
 const emailValido = (v: unknown): v is string => typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 const somenteChaves = (corpo: object, chaves: string[]) => Object.keys(corpo).every(k => chaves.includes(k));
@@ -100,7 +103,7 @@ const enderecoPub = (e: Endereco): Endereco => ({
   ...(e.complemento !== undefined && { complemento: e.complemento }), bairroId: e.bairroId,
 });
 const itemPub = (i: ItemPedido): ItemPedido => ({
-  produtoId: i.produtoId, quantidade: i.quantidade, precoUnitario: i.precoUnitario,
+  produtoId: i.produtoId, nome: i.nome ?? `Produto ${i.produtoId}`, quantidade: i.quantidade, precoUnitario: i.precoUnitario, // AUD-001: itens antigos sem nome
   ...(i.adicionais && { adicionais: i.adicionais.map(adicionalPub) }),
   ...(i.removidos && { removidos: [...i.removidos] }),
   ...(i.observacao !== undefined && { observacao: i.observacao }),
@@ -112,7 +115,15 @@ const pedidoPub = (p: Pedido): Pedido => ({
   itens: p.itens.map(itemPub), taxaEntrega: p.taxaEntrega, total: p.total, formaPagamento: p.formaPagamento,
   ...(p.trocoPara !== undefined && { trocoPara: p.trocoPara }),
   status: p.status, criadoEm: p.criadoEm,
+  historico: (p.historico ?? []).map(h => ({ status: h.status, em: h.em })), // [REQ-044] pedidos antigos sem histórico
+  ...(p.motivo !== undefined && { motivo: p.motivo }),
+  ...(p.estornoRegistrado !== undefined && { estornoRegistrado: p.estornoRegistrado }),
 });
+// [REQ-044] RN12: toda mudança de status entra no histórico com data e hora.
+const mudarStatus = (p: Pedido, status: StatusPedido) => {
+  p.status = status;
+  p.historico = [...(p.historico ?? []), { status, em: new Date().toISOString() }];
+};
 
 const ehObjeto = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 const ehInteiro = (v: unknown): v is number => Number.isInteger(v);
@@ -123,8 +134,15 @@ const usuarioAtual = (res: Response) => res.locals.usuario as JwtPayload;
 const soCliente = [autenticar, exigirPerfil('cliente')];
 
 // [REQ-003] [REQ-040] cardápio público só com produtos ativos (RN08).
-app.get('/produtos', (_req, res) => {
-  res.json(lerDb().produtos.filter(p => p.ativo).map(produtoPub));
+// [REQ-021] com ?todos=1 exige perfil loja e inclui os inativos.
+const lojaSeTodos = (req: Request, res: Response, next: NextFunction) => {
+  if (req.query.todos === undefined) return next();
+  if (req.query.todos !== '1') return erro(res, 400, 'Parâmetro todos aceita só 1');
+  autenticar(req, res, () => exigirPerfil('loja')(req, res, next));
+};
+app.get('/produtos', lojaSeTodos, (req: Request, res: Response) => {
+  const todos = req.query.todos === '1';
+  res.json(lerDb().produtos.filter(p => todos || p.ativo).map(produtoPub));
 });
 
 // [REQ-033] [REQ-009]
@@ -209,7 +227,7 @@ app.post('/pedidos', ...soCliente, (req: Request, res: Response) => {
     const quantidade = i.quantidade as number;
     subtotal += (produto.preco + adicionais.reduce((s, a) => s + a.preco, 0)) * quantidade;
     itens.push({
-      produtoId: produto.id, quantidade, precoUnitario: produto.preco,
+      produtoId: produto.id, nome: produto.nome, quantidade, precoUnitario: produto.preco, // AUD-001
       ...(adicionais.length && { adicionais }),
       ...(removidos.length && { removidos }),
       ...(ehTexto(i.observacao) && i.observacao.trim() && { observacao: i.observacao.trim() }),
@@ -220,10 +238,11 @@ app.post('/pedidos', ...soCliente, (req: Request, res: Response) => {
   const total = centavos(subtotal + bairro.taxa);
   if (c.trocoPara !== undefined && (c.trocoPara as number) < total) return erro(res, 400, 'O troco deve ser para um valor maior ou igual ao total');
 
+  const criadoEm = new Date().toISOString();
   const pedido: Pedido = {
     id: proximoId(db.pedidos), clienteId, enderecoId: endereco.id, itens, taxaEntrega: bairro.taxa, total, formaPagamento,
     ...(c.trocoPara !== undefined && { trocoPara: c.trocoPara as number }),
-    status: 'aguardando_pagamento', criadoEm: new Date().toISOString(),
+    status: 'aguardando_pagamento', criadoEm, historico: [{ status: 'aguardando_pagamento', em: criadoEm }], // [REQ-044]
   };
   db.pedidos.push(pedido);
   gravarDb(db);
@@ -247,9 +266,202 @@ app.post('/pedidos/:id/pagamento', ...soCliente, (req: Request, res: Response) =
   if (!pedido) return erro(res, 404, 'Pedido não encontrado');
   if (pedido.clienteId !== usuarioAtual(res).sub) return erro(res, 403, 'Pedido de outro cliente');
   if (pedido.status !== 'aguardando_pagamento') return erro(res, 400, 'Pedido não está aguardando pagamento');
-  pedido.status = c.aprovado ? 'recebido' : 'cancelado';
+  mudarStatus(pedido, c.aprovado ? 'recebido' : 'cancelado'); // [REQ-044]
   gravarDb(db);
   res.json(pedidoPub(pedido));
+});
+
+// ---- Contrato v3.0.0 (F-003) ----
+const soLoja = [autenticar, exigirPerfil('loja')];
+const soEntregador = [autenticar, exigirPerfil('entregador')];
+const ehNumero = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
+const idDaRota = (req: Request) => Number(req.params.id);
+
+// [REQ-029] [REQ-039] painel da loja: todos os pedidos, recebidos primeiro (RN07), depois os mais novos.
+app.get('/pedidos', ...soLoja, (_req: Request, res: Response) => {
+  const lista = [...lerDb().pedidos].sort((a, b) =>
+    Number(b.status === 'recebido') - Number(a.status === 'recebido') || b.criadoEm.localeCompare(a.criadoEm));
+  res.json(lista.map(pedidoPub));
+});
+
+// Ciclo do pedido (requisitos F-003): quem leva de qual status para qual.
+const TRANSICOES: Record<'loja' | 'entregador', Partial<Record<StatusPedido, StatusPedido[]>>> = {
+  loja: { recebido: ['em_preparo', 'cancelado'], em_preparo: ['pronto', 'cancelado'], pronto: ['cancelado'] },
+  entregador: { pronto: ['saiu_para_entrega'], saiu_para_entrega: ['entregue'] },
+};
+const STATUS: StatusPedido[] = ['aguardando_pagamento', 'recebido', 'em_preparo', 'pronto', 'saiu_para_entrega', 'entregue', 'cancelado'];
+
+// [REQ-017] [REQ-018] [REQ-038] [REQ-044] [REQ-045]
+app.patch('/pedidos/:id/status', autenticar, exigirPerfil('loja', 'entregador'), (req: Request, res: Response) => {
+  const id = idDaRota(req);
+  const c: unknown = req.body;
+  if (!ehInteiro(id) || !ehObjeto(c) || !somenteChaves(c, ['status', 'motivo']) || !STATUS.includes(c.status as StatusPedido)
+    || (c.motivo !== undefined && !ehTexto(c.motivo)))
+    return erro(res, 400, 'Informe um status válido');
+  const novo = c.status as StatusPedido;
+  const motivo = ehTexto(c.motivo) ? c.motivo.trim() : '';
+  if (novo === 'cancelado' && !motivo) return erro(res, 400, 'Informe o motivo da recusa ou do cancelamento');
+  if (novo !== 'cancelado' && c.motivo !== undefined) return erro(res, 400, 'Motivo só para cancelamento');
+  const db = lerDb();
+  const pedido = db.pedidos.find(p => p.id === id);
+  if (!pedido) return erro(res, 404, 'Pedido não encontrado');
+  const usuario = usuarioAtual(res);
+  const perfil = usuario.perfil as 'loja' | 'entregador';
+  if (perfil === 'entregador' && pedido.entregadorId !== usuario.sub) return erro(res, 403, 'Pedido não atribuído a você');
+  if (!(TRANSICOES[perfil][pedido.status] ?? []).includes(novo))
+    return erro(res, 400, `Não é possível passar de ${pedido.status} para ${novo}`);
+  if (novo === 'cancelado') {
+    pedido.motivo = motivo;
+    // RN06: cancelamento depois do aceite só registra o estorno quando o pagamento foi aprovado.
+    if (pedido.status !== 'recebido' && (pedido.historico ?? []).some(h => h.status === 'recebido')) pedido.estornoRegistrado = true;
+  }
+  mudarStatus(pedido, novo);
+  gravarDb(db);
+  res.json(pedidoPub(pedido));
+});
+
+// [REQ-026] RF27: só entregador disponível; pedido ainda na loja.
+app.patch('/pedidos/:id/entregador', ...soLoja, (req: Request, res: Response) => {
+  const id = idDaRota(req);
+  const c: unknown = req.body;
+  if (!ehInteiro(id) || !ehObjeto(c) || !somenteChaves(c, ['entregadorId']) || !ehInteiro(c.entregadorId))
+    return erro(res, 400, 'Informe o entregador');
+  const db = lerDb();
+  const pedido = db.pedidos.find(p => p.id === id);
+  if (!pedido) return erro(res, 404, 'Pedido não encontrado');
+  if (!['recebido', 'em_preparo', 'pronto'].includes(pedido.status)) return erro(res, 400, 'Pedido não pode receber entregador neste status');
+  const entregador = db.usuarios.find(u => u.id === c.entregadorId && u.perfil === 'entregador');
+  if (!entregador) return erro(res, 400, 'Entregador não encontrado');
+  if (!entregador.disponivel) return erro(res, 400, 'Entregador indisponível');
+  pedido.entregadorId = entregador.id;
+  gravarDb(db);
+  res.json(pedidoPub(pedido));
+});
+
+// [REQ-021] [REQ-022] cadastro de produtos pela loja.
+const adicionalValido = (v: unknown) => ehObjeto(v) && somenteChaves(v, ['nome', 'preco'])
+  && ehTexto(v.nome) && !!v.nome.trim() && ehNumero(v.preco) && v.preco >= 0;
+const produtoEntradaValida = (c: unknown): c is Record<string, unknown> => ehObjeto(c)
+  && somenteChaves(c, ['nome', 'categoria', 'preco', 'ativo', 'descricao', 'foto', 'ingredientes', 'adicionais'])
+  && ehTexto(c.nome) && !!c.nome.trim() && ehTexto(c.categoria) && !!c.categoria.trim() && ehNumero(c.preco) && c.preco > 0
+  && (c.ativo === undefined || typeof c.ativo === 'boolean')
+  && (c.descricao === undefined || ehTexto(c.descricao)) && (c.foto === undefined || ehTexto(c.foto))
+  && (c.ingredientes === undefined || listaDeTextos(c.ingredientes))
+  && (c.adicionais === undefined || (Array.isArray(c.adicionais) && c.adicionais.every(adicionalValido)));
+const MSG_PRODUTO = 'Informe nome, categoria e preço maior que zero';
+// Campos opcionais ausentes ficam com o valor de base (padrão na criação, o atual na edição).
+const montarProduto = (c: Record<string, unknown>, base: Produto): Produto => ({
+  id: base.id, nome: (c.nome as string).trim(), categoria: (c.categoria as string).trim(), preco: centavos(c.preco as number),
+  ativo: (c.ativo as boolean | undefined) ?? base.ativo,
+  descricao: (c.descricao as string | undefined) ?? base.descricao,
+  foto: (c.foto as string | undefined) ?? base.foto,
+  ingredientes: [...((c.ingredientes as string[] | undefined) ?? base.ingredientes)],
+  adicionais: ((c.adicionais as Adicional[] | undefined) ?? base.adicionais).map(a => ({ nome: a.nome.trim(), preco: a.preco })),
+});
+
+app.post('/produtos', ...soLoja, (req: Request, res: Response) => {
+  const c: unknown = req.body;
+  if (!produtoEntradaValida(c)) return erro(res, 400, MSG_PRODUTO);
+  const db = lerDb();
+  const produto = montarProduto(c, {
+    id: proximoId(db.produtos), nome: '', categoria: '', preco: 0, ativo: true, descricao: '', foto: '🍽️', ingredientes: [], adicionais: [],
+  });
+  db.produtos.push(produto);
+  gravarDb(db);
+  res.status(201).json(produtoPub(produto));
+});
+
+app.put('/produtos/:id', ...soLoja, (req: Request, res: Response) => {
+  const id = idDaRota(req);
+  const c: unknown = req.body;
+  if (!ehInteiro(id) || !produtoEntradaValida(c)) return erro(res, 400, MSG_PRODUTO);
+  const db = lerDb();
+  const i = db.produtos.findIndex(p => p.id === id);
+  if (i < 0) return erro(res, 404, 'Produto não encontrado');
+  db.produtos[i] = montarProduto(c, db.produtos[i]);
+  gravarDb(db);
+  res.json(produtoPub(db.produtos[i]));
+});
+
+// [REQ-022] RF23: pausar sem excluir; some do cardápio do cliente (RN08).
+app.patch('/produtos/:id', ...soLoja, (req: Request, res: Response) => {
+  const id = idDaRota(req);
+  const c: unknown = req.body;
+  if (!ehInteiro(id) || !ehObjeto(c) || !somenteChaves(c, ['ativo']) || typeof c.ativo !== 'boolean')
+    return erro(res, 400, 'Informe ativo como true ou false');
+  const db = lerDb();
+  const produto = db.produtos.find(p => p.id === id);
+  if (!produto) return erro(res, 404, 'Produto não encontrado');
+  produto.ativo = c.ativo;
+  gravarDb(db);
+  res.json(produtoPub(produto));
+});
+
+// [REQ-024] RF25: bairros e taxa de entrega.
+const bairroEntradaValida = (c: unknown): c is { nome: string; taxa: number } => ehObjeto(c) && somenteChaves(c, ['nome', 'taxa'])
+  && ehTexto(c.nome) && !!c.nome.trim() && ehNumero(c.taxa) && c.taxa >= 0;
+const MSG_BAIRRO = 'Informe nome e taxa maior ou igual a zero';
+
+app.post('/bairros', ...soLoja, (req: Request, res: Response) => {
+  const c: unknown = req.body;
+  if (!bairroEntradaValida(c)) return erro(res, 400, MSG_BAIRRO);
+  const db = lerDb();
+  const bairro: Bairro = { id: proximoId(db.bairros), nome: c.nome.trim(), taxa: centavos(c.taxa) };
+  db.bairros.push(bairro);
+  gravarDb(db);
+  res.status(201).json(bairro);
+});
+
+app.put('/bairros/:id', ...soLoja, (req: Request, res: Response) => {
+  const id = idDaRota(req);
+  const c: unknown = req.body;
+  if (!ehInteiro(id) || !bairroEntradaValida(c)) return erro(res, 400, MSG_BAIRRO);
+  const db = lerDb();
+  const bairro = db.bairros.find(b => b.id === id);
+  if (!bairro) return erro(res, 404, 'Bairro não encontrado');
+  bairro.nome = c.nome.trim();
+  bairro.taxa = centavos(c.taxa);
+  gravarDb(db);
+  res.json({ id: bairro.id, nome: bairro.nome, taxa: bairro.taxa });
+});
+
+// [REQ-026] [REQ-030] entregadores e disponibilidade.
+const entregadorPub = (u: UsuarioDb): Entregador => ({
+  id: u.id, nome: u.nome, ...(u.telefone !== undefined && { telefone: u.telefone }), disponivel: u.disponivel ?? false,
+});
+
+app.get('/entregadores', ...soLoja, (_req: Request, res: Response) => {
+  res.json(lerDb().usuarios.filter(u => u.perfil === 'entregador').map(entregadorPub));
+});
+
+app.patch('/entregadores/me', ...soEntregador, (req: Request, res: Response) => {
+  const c: unknown = req.body;
+  if (!ehObjeto(c) || !somenteChaves(c, ['disponivel']) || typeof c.disponivel !== 'boolean')
+    return erro(res, 400, 'Informe disponivel como true ou false');
+  const db = lerDb();
+  const eu = db.usuarios.find(u => u.id === usuarioAtual(res).sub && u.perfil === 'entregador');
+  if (!eu) return erro(res, 401, 'Usuário não encontrado');
+  eu.disponivel = c.disponivel;
+  gravarDb(db);
+  res.json(entregadorPub(eu));
+});
+
+// [REQ-031] [REQ-032] só as entregas do entregador logado, com endereço completo e contato do cliente.
+app.get('/entregas', ...soEntregador, (_req: Request, res: Response) => {
+  const db = lerDb();
+  const eu = usuarioAtual(res).sub;
+  const entregas: Entrega[] = [];
+  for (const p of db.pedidos.filter(x => x.entregadorId === eu).sort((a, b) => b.criadoEm.localeCompare(a.criadoEm))) {
+    const endereco = db.enderecos.find(e => e.id === p.enderecoId);
+    const bairro = endereco && db.bairros.find(b => b.id === endereco.bairroId);
+    const cliente = db.usuarios.find(u => u.id === p.clienteId);
+    if (!endereco || !bairro || !cliente) continue;
+    entregas.push({
+      pedido: pedidoPub(p), endereco: enderecoPub(endereco), bairro: { id: bairro.id, nome: bairro.nome, taxa: bairro.taxa },
+      clienteNome: cliente.nome, ...(cliente.telefone !== undefined && { clienteTelefone: cliente.telefone }),
+    });
+  }
+  res.json(entregas);
 });
 
 // Erros sem stack trace (JSON malformado vira 400).

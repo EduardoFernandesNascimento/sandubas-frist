@@ -1,9 +1,10 @@
 {
   "loja": {"aberta":true,"pedidoMinimo":10,"tempoPreparoMin":20,"tempoEntregaMin":15},
   "usuarios": [
-    {"id":1,"nome":"Cliente Demo","email":"cliente@demo.com","perfil":"cliente","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2"},
-    {"id":2,"nome":"Loja Demo","email":"loja@demo.com","perfil":"loja","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2"},
-    {"id":3,"nome":"Entregador Demo","email":"entregador@demo.com","perfil":"entregador","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2"}
+    {"id":1,"nome":"Cliente Demo","email":"cliente@demo.com","perfil":"cliente","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0001"},
+    {"id":2,"nome":"Loja Demo","email":"loja@demo.com","perfil":"loja","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0002"},
+    {"id":3,"nome":"Entregador Demo","email":"entregador@demo.com","perfil":"entregador","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0003","disponivel":true},
+    {"id":4,"nome":"Entregador Dois","email":"entregador2@demo.com","perfil":"entregador","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0004","disponivel":true}
   ],
   "produtos": [
     {"id":1,"nome":"X-Burguer Frist","categoria":"lanches","preco":22.9,"ativo":true,"descricao":"Hambúrguer artesanal com queijo, alface e tomate no pão brioche.","foto":"🍔","ingredientes":["pão brioche","hambúrguer","queijo","alface","tomate","cebola"],"adicionais":[{"nome":"Bacon","preco":4},{"nome":"Ovo","preco":2.5},{"nome":"Queijo extra","preco":3}]},
@@ -18,8 +19,8 @@
     {"id":10,"nome":"Brownie com Sorvete","categoria":"sobremesas","preco":14,"ativo":true,"descricao":"Brownie de chocolate com bola de sorvete de creme.","foto":"🍫","ingredientes":["brownie","sorvete de creme","calda de chocolate"],"adicionais":[{"nome":"Calda extra","preco":2}]}
   ],
   "pedidos": [
-    {"id":1,"clienteId":1,"entregadorId":3,"itens":[{"produtoId":1,"quantidade":2,"precoUnitario":22.9,"observacao":"sem cebola"},{"produtoId":6,"quantidade":2,"precoUnitario":6}],"taxaEntrega":5,"total":62.8,"formaPagamento":"pix","status":"saiu_para_entrega","criadoEm":"2026-10-30T19:10:00.000Z"},
-    {"id":2,"clienteId":1,"itens":[{"produtoId":8,"quantidade":1,"precoUnitario":39.9}],"taxaEntrega":7.5,"total":47.4,"formaPagamento":"cartao","status":"recebido","criadoEm":"2026-10-31T12:00:00.000Z"}
+    {"id":1,"clienteId":1,"entregadorId":3,"enderecoId":1,"itens":[{"produtoId":1,"nome":"X-Burguer Frist","quantidade":2,"precoUnitario":22.9,"observacao":"sem cebola"},{"produtoId":6,"nome":"Refrigerante Lata","quantidade":2,"precoUnitario":6}],"taxaEntrega":5,"total":62.8,"formaPagamento":"pix","status":"saiu_para_entrega","criadoEm":"2026-10-30T19:10:00.000Z","historico":[{"status":"aguardando_pagamento","em":"2026-10-30T19:10:00.000Z"},{"status":"recebido","em":"2026-10-30T19:15:00.000Z"},{"status":"em_preparo","em":"2026-10-30T19:20:00.000Z"},{"status":"pronto","em":"2026-10-30T19:25:00.000Z"},{"status":"saiu_para_entrega","em":"2026-10-30T19:30:00.000Z"}]},
+    {"id":2,"clienteId":1,"enderecoId":1,"itens":[{"produtoId":8,"nome":"Combo Frist (X-Burguer + Batata + Refri)","quantidade":1,"precoUnitario":39.9}],"taxaEntrega":7.5,"total":47.4,"formaPagamento":"cartao","status":"recebido","criadoEm":"2026-10-31T12:00:00.000Z","historico":[{"status":"aguardando_pagamento","em":"2026-10-31T12:00:00.000Z"},{"status":"recebido","em":"2026-10-31T12:05:00.000Z"}]}
   ],
   "bairros": [
     {"id":1,"nome":"Vila Fictícia","taxa":5},
