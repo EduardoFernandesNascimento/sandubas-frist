@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
   title: Sanduba's Frist API
-  version: v1
-  description: Contrato da F-001 (login, cadastro e cardápio público). Trabalho acadêmico, dados fictícios.
+  version: 2.0.0
+  description: Contrato da F-001 (login, cadastro e cardápio) mais a F-002 (loja, bairros, endereços, pedido do cliente e pagamento simulado). Trabalho acadêmico, dados fictícios.
   license:
     name: Uso acadêmico
 servers:
@@ -14,6 +14,12 @@ tags:
     description: Login e cadastro
   - name: produtos
     description: Cardápio
+  - name: loja
+    description: Situação da loja e bairros atendidos
+  - name: enderecos
+    description: Endereços do cliente
+  - name: pedidos
+    description: Pedidos do cliente
 paths:
   /auth/login:
     post:
@@ -65,17 +71,170 @@ paths:
     get:
       tags: [produtos]
       operationId: listarProdutos
-      summary: Listar produtos (público)
+      summary: Listar produtos ativos do cardápio (público)
       security: []
       responses:
         '200':
-          description: Lista de produtos
+          description: Lista de produtos ativos
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Produto'
+  /loja:
+    get:
+      tags: [loja]
+      operationId: obterLoja
+      summary: Situação da loja, pedido mínimo e tempos (público)
+      security: []
+      responses:
+        '200':
+          description: Dados da loja
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loja'
+  /bairros:
+    get:
+      tags: [loja]
+      operationId: listarBairros
+      summary: Bairros atendidos e taxa de entrega (público)
+      security: []
+      responses:
+        '200':
+          description: Lista de bairros
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bairro'
+  /enderecos:
+    get:
+      tags: [enderecos]
+      operationId: listarEnderecos
+      summary: Endereços do cliente logado
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de endereços do cliente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Endereco'
+        '401':
+          $ref: '#/components/responses/Erro401'
+        '403':
+          $ref: '#/components/responses/Erro403'
+    post:
+      tags: [enderecos]
+      operationId: criarEndereco
+      summary: Cadastrar endereço do cliente logado (bairro da lista)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnderecoEntrada'
+      responses:
+        '201':
+          description: Endereço criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endereco'
+        '400':
+          $ref: '#/components/responses/Erro400'
+        '401':
+          $ref: '#/components/responses/Erro401'
+        '403':
+          $ref: '#/components/responses/Erro403'
+  /pedidos:
+    post:
+      tags: [pedidos]
+      operationId: criarPedido
+      summary: Criar pedido (total e preços calculados pela API)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoEntrada'
+      responses:
+        '201':
+          description: Pedido criado com status aguardando_pagamento
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          $ref: '#/components/responses/Erro400'
+        '401':
+          $ref: '#/components/responses/Erro401'
+        '403':
+          $ref: '#/components/responses/Erro403'
+  /pedidos/meus:
+    get:
+      tags: [pedidos]
+      operationId: listarMeusPedidos
+      summary: Pedidos do cliente logado
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de pedidos do cliente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pedido'
+        '401':
+          $ref: '#/components/responses/Erro401'
+        '403':
+          $ref: '#/components/responses/Erro403'
+  /pedidos/{id}/pagamento:
+    post:
+      tags: [pedidos]
+      operationId: simularPagamento
+      summary: Simular pagamento (aprovado vira recebido, recusado vira cancelado)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PagamentoEntrada'
+      responses:
+        '200':
+          description: Pedido com o status atualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          $ref: '#/components/responses/Erro400'
+        '401':
+          $ref: '#/components/responses/Erro401'
+        '403':
+          $ref: '#/components/responses/Erro403'
+        '404':
+          $ref: '#/components/responses/Erro404'
 components:
   securitySchemes:
     bearerAuth:
@@ -84,7 +243,7 @@ components:
       bearerFormat: JWT
   responses:
     Erro400:
-      description: Dados inválidos
+      description: Dados inválidos ou regra de negócio violada
       content:
         application/json:
           schema:
@@ -101,6 +260,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Erro'
+    Erro404:
+      description: Recurso não encontrado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Erro'
     Erro409:
       description: E-mail já cadastrado
       content:
@@ -111,6 +276,12 @@ components:
     Perfil:
       type: string
       enum: [cliente, loja, entregador]
+    StatusPedido:
+      type: string
+      enum: [aguardando_pagamento, recebido, em_preparo, pronto, saiu_para_entrega, entregue, cancelado]
+    FormaPagamento:
+      type: string
+      enum: [pix, cartao, dinheiro]
     Usuario:
       type: object
       additionalProperties: false
@@ -120,16 +291,136 @@ components:
         nome: { type: string }
         email: { type: string, format: email }
         perfil: { $ref: '#/components/schemas/Perfil' }
+    Adicional:
+      type: object
+      additionalProperties: false
+      required: [nome, preco]
+      properties:
+        nome: { type: string }
+        preco: { type: number }
     Produto:
       type: object
       additionalProperties: false
-      required: [id, nome, categoria, preco, ativo]
+      required: [id, nome, categoria, preco, ativo, descricao, foto, ingredientes, adicionais]
       properties:
         id: { type: integer }
         nome: { type: string }
         categoria: { type: string }
         preco: { type: number }
         ativo: { type: boolean }
+        descricao: { type: string }
+        foto: { type: string, description: 'URL local ou emoji usado como placeholder' }
+        ingredientes:
+          type: array
+          items: { type: string }
+        adicionais:
+          type: array
+          items: { $ref: '#/components/schemas/Adicional' }
+    Loja:
+      type: object
+      additionalProperties: false
+      required: [aberta, pedidoMinimo, tempoPreparoMin, tempoEntregaMin]
+      properties:
+        aberta: { type: boolean }
+        pedidoMinimo: { type: number }
+        tempoPreparoMin: { type: integer }
+        tempoEntregaMin: { type: integer }
+    Bairro:
+      type: object
+      additionalProperties: false
+      required: [id, nome, taxa]
+      properties:
+        id: { type: integer }
+        nome: { type: string }
+        taxa: { type: number }
+    Endereco:
+      type: object
+      additionalProperties: false
+      required: [id, clienteId, rua, numero, bairroId]
+      properties:
+        id: { type: integer }
+        clienteId: { type: integer }
+        rua: { type: string }
+        numero: { type: string }
+        complemento: { type: string }
+        bairroId: { type: integer }
+    EnderecoEntrada:
+      type: object
+      additionalProperties: false
+      required: [rua, numero, bairroId]
+      properties:
+        rua: { type: string, minLength: 1 }
+        numero: { type: string, minLength: 1 }
+        complemento: { type: string }
+        bairroId: { type: integer }
+    ItemPedidoEntrada:
+      type: object
+      additionalProperties: false
+      required: [produtoId, quantidade]
+      properties:
+        produtoId: { type: integer }
+        quantidade: { type: integer, minimum: 1 }
+        adicionais:
+          type: array
+          description: Nomes dos adicionais do produto
+          items: { type: string }
+        removidos:
+          type: array
+          description: Ingredientes removidos
+          items: { type: string }
+        observacao: { type: string }
+    PedidoEntrada:
+      type: object
+      additionalProperties: false
+      required: [itens, enderecoId, formaPagamento]
+      properties:
+        itens:
+          type: array
+          minItems: 1
+          items: { $ref: '#/components/schemas/ItemPedidoEntrada' }
+        enderecoId: { type: integer }
+        formaPagamento: { $ref: '#/components/schemas/FormaPagamento' }
+        trocoPara: { type: number, description: 'Só quando formaPagamento = dinheiro' }
+    ItemPedido:
+      type: object
+      additionalProperties: false
+      required: [produtoId, quantidade, precoUnitario]
+      properties:
+        produtoId: { type: integer }
+        quantidade: { type: integer }
+        precoUnitario: { type: number, description: 'Preço do produto copiado no momento do pedido' }
+        adicionais:
+          type: array
+          description: Adicionais com o preço copiado no momento do pedido
+          items: { $ref: '#/components/schemas/Adicional' }
+        removidos:
+          type: array
+          items: { type: string }
+        observacao: { type: string }
+    Pedido:
+      type: object
+      additionalProperties: false
+      required: [id, clienteId, itens, taxaEntrega, total, formaPagamento, status, criadoEm]
+      properties:
+        id: { type: integer }
+        clienteId: { type: integer }
+        entregadorId: { type: integer }
+        enderecoId: { type: integer }
+        itens:
+          type: array
+          items: { $ref: '#/components/schemas/ItemPedido' }
+        taxaEntrega: { type: number }
+        total: { type: number }
+        formaPagamento: { $ref: '#/components/schemas/FormaPagamento' }
+        trocoPara: { type: number }
+        status: { $ref: '#/components/schemas/StatusPedido' }
+        criadoEm: { type: string, format: date-time }
+    PagamentoEntrada:
+      type: object
+      additionalProperties: false
+      required: [aprovado]
+      properties:
+        aprovado: { type: boolean }
     LoginEntrada:
       type: object
       additionalProperties: false
