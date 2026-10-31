@@ -1,0 +1,19 @@
+# EV-018 · integracao
+# comando: curl -s -i -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5vbWUiOiJDbGllbnRlIERlbW8iLCJwZXJmaWwiOiJjbGllbnRlIiwiaWF0IjoxNzkzNDU3NTA1LCJleHAiOjE3OTM0NjExMDV9.wjwYa32Mw2_7jgBAB7JtLiA1f2-Fp40wFnRpsufiU-E' http://127.0.0.1:3997/pedidos/meus
+# shell: bash
+# início: 2026-10-31T14:39:29.761Z
+# fim: 2026-10-31T14:39:29.813Z (0.1 s)
+# resultado: regex HTTP/1.1 (\d+)
+# código de saída: 0
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: http://localhost:5173
+Vary: Origin
+Content-Type: application/json; charset=utf-8
+Content-Length: 1077
+ETag: W/"435-wV2EO1VpvHy94l4LhYywzAKb3fQ"
+Date: Sat, 31 Oct 2026 14:39:29 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+[{"id":1,"clienteId":1,"entregadorId":3,"itens":[{"produtoId":1,"quantidade":2,"precoUnitario":22.9,"observacao":"sem cebola"},{"produtoId":6,"quantidade":2,"precoUnitario":6}],"taxaEntrega":5,"total":62.8,"formaPagamento":"pix","status":"saiu_para_entrega","criadoEm":"2026-10-30T19:10:00.000Z"},{"id":2,"clienteId":1,"itens":[{"produtoId":8,"quantidade":1,"precoUnitario":39.9}],"taxaEntrega":7.5,"total":47.4,"formaPagamento":"cartao","status":"recebido","criadoEm":"2026-10-31T12:00:00.000Z"},{"id":3,"clienteId":1,"enderecoId":2,"itens":[{"produtoId":1,"quantidade":2,"precoUnitario":22.9,"adicionais":[{"nome":"Bacon","preco":4}],"removidos":["cebola"],"observacao":"bem passado"},{"produtoId":6,"quantidade":1,"precoUnitario":6}],"taxaEntrega":6.5,"total":66.3,"formaPagamento":"dinheiro","trocoPara":100,"status":"recebido","criadoEm":"2026-10-31T14:38:59.082Z"},{"id":4,"clienteId":1,"enderecoId":1,"itens":[{"produtoId":6,"quantidade":2,"precoUnitario":6}],"taxaEntrega":5,"total":17,"formaPagamento":"pix","status":"cancelado","criadoEm":"2026-10-31T14:39:08.434Z"}]

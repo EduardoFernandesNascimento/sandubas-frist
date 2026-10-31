@@ -12,10 +12,6 @@ function Placeholder({ titulo, texto }: { titulo: string; texto: string }) {
   )
 }
 
-export function InicioCliente() {
-  return <Placeholder titulo="Área do cliente" texto="Em breve: cardápio, carrinho e seus pedidos." />
-}
-
 export function InicioLoja() {
   return <Placeholder titulo="Painel da loja" texto="Em breve: pedidos recebidos e cardápio." />
 }

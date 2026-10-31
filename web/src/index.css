@@ -74,3 +74,52 @@ button.link:hover { background: none; color: #8f1e18; }
 @media (max-width: 480px) {
   .cartao, .pagina { margin: 1rem; padding: 1rem; }
 }
+
+/* F-002: telas do cliente (cardápio, carrinho, checkout e pedidos). */
+.pagina.larga { max-width: 1000px; }
+h3 { margin: 0 0 0.25rem; font-size: 1.05rem; }
+.categoria { font-size: 1.25rem; color: var(--vermelho); border-bottom: 3px solid var(--dourado); padding-bottom: 0.25rem; margin-top: 1.5rem; }
+.grade { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+.produto { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.75rem; border: 1px solid #ecd9b0; border-radius: 8px; background: #fffdf8; }
+.produto-info { flex: 1; }
+.foto { display: block; width: 100%; height: 120px; object-fit: cover; border-radius: 6px; background: #fdebc8; font-size: 3.5rem; text-align: center; line-height: 120px; }
+.descricao { margin: 0; font-size: 0.9rem; color: #5a4630; }
+.preco { font-weight: 700; color: var(--vermelho); margin: 0.25rem 0 0; }
+.aviso.fechado { background: #fbe0de; border-left-color: var(--vermelho); }
+.aviso.ok { background: #fff1c9; border-left-color: var(--dourado); }
+
+.fundo-modal { position: fixed; inset: 0; background: rgb(0 0 0 / 0.45); display: flex; align-items: center; justify-content: center; padding: 1rem; z-index: 10; }
+.modal { background: #fff; border-radius: 8px; border-top: 4px solid var(--dourado); padding: 1.25rem; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; }
+fieldset { border: 1px solid #ecd9b0; border-radius: 6px; display: flex; flex-direction: column; gap: 0.4rem; padding: 0.5rem 0.75rem; }
+legend { font-weight: 700; }
+label.opcao { flex-direction: row; align-items: center; gap: 0.5rem; font-weight: 400; }
+textarea, select { padding: 0.6rem; font: inherit; border: 1px solid #8a7550; border-radius: 4px; }
+textarea:focus-visible, select:focus-visible { outline: 3px solid var(--dourado); outline-offset: 2px; }
+.acoes { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem; }
+button.secundario { background: #fff; color: var(--vermelho); border: 2px solid var(--vermelho); }
+button.secundario:hover { background: #fbe0de; }
+
+.lista { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+.item-carrinho { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 0.75rem; border-bottom: 1px solid #ecd9b0; }
+.item-texto { flex: 1; min-width: 160px; }
+.detalhe { margin: 0; font-size: 0.85rem; color: #5a4630; }
+.quantidade { display: flex; align-items: center; gap: 0.5rem; }
+.quantidade button { padding: 0.25rem 0.7rem; }
+.total { font-size: 1.15rem; font-weight: 800; }
+.resumo { display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 1rem; margin: 1rem 0 0.25rem; }
+.resumo dt { font-weight: 600; }
+.resumo dd { margin: 0; text-align: right; }
+.sub-form { margin-top: 0.75rem; padding: 0.75rem; border: 1px dashed #c9a96a; border-radius: 6px; }
+.simular { margin-top: 1rem; }
+
+.pedido { padding: 0.75rem; border: 2px solid #ecd9b0; border-radius: 8px; transition: background 0.4s, border-color 0.4s; }
+.pedido.destaque { background: #fff1c9; border-color: var(--laranja); }
+.pedido-topo { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.5rem; }
+.pedido-topo h2 { margin: 0; }
+.itens { margin: 0.5rem 0; padding-left: 1.2rem; }
+.banner-status { background: #ffd9b8; border-left: 6px solid var(--laranja); color: #2b1d0e; font-weight: 700; padding: 0.6rem 0.75rem; border-radius: 6px; }
+.status { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; background: #fdebc8; color: var(--texto); }
+.status-recebido, .status-em_preparo { background: #fff1c9; }
+.status-saiu_para_entrega, .status-pronto { background: #ffd9b8; }
+.status-entregue { background: #d8f0d2; color: #1e4d1a; }
+.status-cancelado { background: #fbe0de; color: #7a1a14; }
