@@ -1,0 +1,12 @@
+# EV-005 · smoke
+# comando: npm run smoke --prefix api
+# shell: bash
+# início: 2026-10-31T20:32:45.927Z
+# fim: 2026-10-31T20:32:48.409Z (2.5 s)
+# resultado: regex smoke ok[^\n]*
+# código de saída: 0
+
+> sanduba-api@1.0.0 smoke
+> node smoke.mjs
+
+smoke ok: 200, 9 produtos

@@ -1,0 +1,18 @@
+# EV-014 · codigo
+# comando: grep -n -e 'describe(' -e 'it(' -e Bearer -e JWT_EXPIRA_EM api/roteiro.test.ts
+# shell: bash
+# início: 2026-10-31T20:37:18.570Z
+# fim: 2026-10-31T20:37:18.618Z (0.0 s)
+# resultado: última linha
+# código de saída: 0
+17:  delete process.env.JWT_EXPIRA_EM;
+20:  delete process.env.JWT_EXPIRA_EM;
+29:const bearer = (token: string) => ({ Authorization: `Bearer ${token}` });
+32:describe('Roteiro de demonstração (DOC-01 p.13)', () => {
+36:  it('[REQ-069] passo 2: login do cliente devolve o JWT com sub, nome, perfil e exp no payload', async () => {
+47:  it('[REQ-069] passo 3: pedido confirmado com Authorization: Bearer (sem o cabeçalho, 401)', async () => {
+58:  it('[REQ-069] passo 4: com o token de cliente, GET /pedidos responde 403', async () => {
+64:  it('[REQ-069] passo 5: a loja vê o pedido, aceita e muda os status', async () => {
+78:  it('[REQ-069] passo 6: o entregador confirma a entrega e o cliente vê "entregue"', async () => {
+90:  it('[REQ-069] passo 7: depois que o token expira, a próxima chamada devolve 401', async () => {
+91:    process.env.JWT_EXPIRA_EM = '1s';

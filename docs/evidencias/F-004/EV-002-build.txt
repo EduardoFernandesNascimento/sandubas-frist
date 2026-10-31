@@ -1,0 +1,21 @@
+# EV-002 · build
+# comando: npm run build --prefix web
+# shell: bash
+# início: 2026-10-31T20:32:15.695Z
+# fim: 2026-10-31T20:32:17.808Z (2.1 s)
+# resultado: regex built in [0-9.]+ ?m?s
+# código de saída: 0
+
+> web@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 102 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.46 kB │ gzip:   0.29 kB
+dist/assets/index-DZOzghr5.css    7.69 kB │ gzip:   2.35 kB
+dist/assets/index-vmlCDmTh.js   359.01 kB │ gzip: 113.17 kB
+
+✓ built in 426ms
