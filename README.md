@@ -86,11 +86,22 @@ Os testes usam uma cópia temporária do `db.json`; o arquivo original não é a
 
 No front: `cd web` e `npm run build` (confere os tipos e gera o build).
 
+## Documentação
+
+- [Requisitos do trabalho](docs/requisitos/requisitos-sanduba-frist.pdf)
+- [Diagramas](docs/diagramas/sanduba-frist-diagramas.drawio): os 7 diagramas; abra em [app.diagrams.net](https://app.diagrams.net)
+- [Logo original](docs/marca/logo-sanduba-frist.png): de onde vem a paleta de cores
+- [Contrato da API](docs/api/openapi.v1.yaml) (OpenAPI)
+- [Evidências](docs/evidencias/): testes e build de cada feature
+
 ## Estrutura de pastas
 
 ```
-api/      API Express (server.ts), dados (db.json) e testes
-web/      front React + Vite (src/pages, src/components, src/services; imagens em public/)
-shared/   tipos TypeScript usados pela API e pelo front
-docs/     contrato da API (docs/api/openapi.v1.yaml) e evidências dos testes
+api/             API Express (server.ts), dados (db.json) e testes
+web/             front React + Vite (src/pages, src/components, src/services; imagens em public/)
+shared/          tipos TypeScript usados pela API e pelo front
+docs/            contrato da API (docs/api/openapi.v1.yaml) e evidências dos testes
+docs/requisitos/ requisitos do trabalho (PDF)
+docs/diagramas/  diagramas (.drawio)
+docs/marca/      logo original
 ```
