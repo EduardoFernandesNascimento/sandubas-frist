@@ -1,2 +1,12 @@
+# Texto sempre com LF no repositório e na cópia de trabalho.
+# Fica no topo: no .gitattributes a última regra que casa vence.
+* text=auto eol=lf
+
 # Scripts de shell com fim de linha LF em qualquer sistema: com CRLF, o bash quebra em "$'\r'".
 *.sh text eol=lf
+
+# Binários: sem conversão de fim de linha nem diff de texto.
+*.png binary
+*.jpg binary
+*.pdf binary
+*.ico binary
