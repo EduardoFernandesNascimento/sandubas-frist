@@ -123,3 +123,15 @@ button.secundario:hover { background: #fbe0de; }
 .status-saiu_para_entrega, .status-pronto { background: #ffd9b8; }
 .status-entregue { background: #d8f0d2; color: #1e4d1a; }
 .status-cancelado { background: #fbe0de; color: #7a1a14; }
+
+/* F-003: painel da loja, cardápio da loja, taxas e entregador. */
+@keyframes piscar { 0%, 100% { background: #fff1c9; } 50% { background: #ffd9b8; } }
+.piscar { animation: piscar 1s ease-in-out 6; }
+@media (prefers-reduced-motion: reduce) { .piscar { animation: none; } }
+.historico { margin-top: 0.5rem; font-size: 0.9rem; }
+.historico summary { cursor: pointer; font-weight: 600; color: var(--vermelho); }
+.historico ol { margin: 0.25rem 0 0; padding-left: 1.2rem; }
+.pausado { opacity: 0.7; background: #f6efe2; }
+.emoji { font-size: 2rem; }
+address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
+button[aria-pressed="true"] { outline: 3px solid var(--dourado); }

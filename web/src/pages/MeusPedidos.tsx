@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import type { PagamentoEntrada, Pedido, Produto, StatusPedido } from '../../../shared/tipos'
+import type { PagamentoEntrada, Pedido, StatusPedido } from '../../../shared/tipos'
+import { Historico } from '../components/Historico'
 import { api, mensagemDeErro } from '../services/api'
 import { moeda, rotuloPagamento, rotuloStatus } from '../services/formatar'
 
@@ -10,19 +11,11 @@ const DESTAQUE_MS = 6000
 // REQ-012: acompanhamento por polling, com destaque quando o status muda (tela 3 de 3, REQ-066).
 export function MeusPedidos() {
   const [pedidos, setPedidos] = useState<Pedido[]>([])
-  const [nomes, setNomes] = useState<Record<number, string>>({})
   const [carregando, setCarregando] = useState(true)
   const [erro, setErro] = useState('')
   const [destaques, setDestaques] = useState<number[]>([])
   const [banner, setBanner] = useState('')
   const anteriores = useRef<Map<number, StatusPedido> | null>(null)
-
-  useEffect(() => {
-    api
-      .get<Produto[]>('/produtos')
-      .then((r) => setNomes(Object.fromEntries(r.data.map((p) => [p.id, p.nome]))))
-      .catch(() => setNomes({}))
-  }, [])
 
   useEffect(() => {
     let ativo = true
@@ -107,7 +100,7 @@ export function MeusPedidos() {
             <ul className="itens">
               {p.itens.map((i, n) => (
                 <li key={n}>
-                  {i.quantidade}× {nomes[i.produtoId] ?? `Produto ${i.produtoId}`}
+                  {i.quantidade}× {i.nome || `Produto ${i.produtoId}`}
                   {i.adicionais && i.adicionais.length > 0 && ` + ${i.adicionais.map((a) => a.nome).join(', ')}`}
                   {i.removidos && i.removidos.length > 0 && ` (sem ${i.removidos.join(', ')})`}
                 </li>
@@ -128,6 +121,9 @@ export function MeusPedidos() {
                 </button>
               </div>
             )}
+            {p.motivo && <p className="detalhe">Motivo: {p.motivo}</p>}
+            {p.estornoRegistrado && <p className="detalhe">Estorno registrado</p>}
+            <Historico historico={p.historico} />
           </li>
         ))}
       </ul>
