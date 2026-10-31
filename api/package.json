@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "tsx server.ts",
+    "smoke": "node smoke.mjs",
     "test": "vitest run",
     "tipos": "tsc --noEmit -p ."
   },
