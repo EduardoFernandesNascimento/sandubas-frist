@@ -1,0 +1,76 @@
+/* Cores da marca (RNF02): dourado, vermelho e laranja. */
+:root {
+  --dourado: #d4a017;
+  --vermelho: #b3261e;
+  --laranja: #e8650a;
+  --texto: #2b1d0e;
+  --fundo: #fff8ec;
+  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+  color: var(--texto);
+  background: var(--fundo);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; }
+h1 { color: var(--vermelho); margin-top: 0; }
+h2 { font-size: 1rem; }
+a { color: var(--vermelho); }
+
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(90deg, var(--vermelho), #b8470a);
+  color: #fff;
+  border-bottom: 4px solid var(--dourado);
+}
+.marca { font-weight: 800; font-size: 1.25rem; }
+.menu { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+.menu a { color: #fff; text-decoration: none; font-weight: 600; }
+.menu a.active { text-decoration: underline; text-decoration-color: var(--dourado); text-decoration-thickness: 3px; }
+.quem { font-size: 0.9rem; }
+
+.cartao, .pagina {
+  max-width: 420px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 8px;
+  border-top: 4px solid var(--dourado);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+}
+.pagina { max-width: 800px; }
+
+form { display: flex; flex-direction: column; gap: 0.75rem; }
+label { display: flex; flex-direction: column; gap: 0.25rem; font-weight: 600; }
+input { padding: 0.6rem; font: inherit; border: 1px solid #8a7550; border-radius: 4px; }
+
+button {
+  padding: 0.6rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: var(--vermelho);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover { background: #8f1e18; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid var(--dourado); outline-offset: 2px; }
+
+.botao-sair { background: var(--dourado); color: var(--texto); }
+.botao-sair:hover { background: #b88a10; }
+button.link { background: none; color: var(--vermelho); padding: 0; text-decoration: underline; font-weight: 400; }
+button.link:hover { background: none; color: #8f1e18; }
+
+.erro { color: var(--vermelho); margin: 0; }
+.aviso { background: #fde7c8; border-left: 4px solid var(--laranja); padding: 0.5rem; }
+.teste ul { padding-left: 1.2rem; }
+
+@media (max-width: 480px) {
+  .cartao, .pagina { margin: 1rem; padding: 1rem; }
+}

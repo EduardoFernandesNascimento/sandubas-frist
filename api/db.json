@@ -1,0 +1,45 @@
+{
+  "usuarios": [
+    { "id": 1, "nome": "Cliente Demo", "email": "cliente@demo.com", "perfil": "cliente", "senhaHash": "$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2" },
+    { "id": 2, "nome": "Loja Demo", "email": "loja@demo.com", "perfil": "loja", "senhaHash": "$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2" },
+    { "id": 3, "nome": "Entregador Demo", "email": "entregador@demo.com", "perfil": "entregador", "senhaHash": "$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2" }
+  ],
+  "produtos": [
+    { "id": 1, "nome": "X-Burguer Frist", "categoria": "lanches", "preco": 22.9, "ativo": true },
+    { "id": 2, "nome": "X-Bacon Duplo", "categoria": "lanches", "preco": 29.9, "ativo": true },
+    { "id": 3, "nome": "Sanduba de Frango", "categoria": "lanches", "preco": 24.5, "ativo": true },
+    { "id": 4, "nome": "Batata Frita", "categoria": "porções", "preco": 15.0, "ativo": true },
+    { "id": 5, "nome": "Onion Rings", "categoria": "porções", "preco": 17.5, "ativo": true },
+    { "id": 6, "nome": "Refrigerante Lata", "categoria": "bebidas", "preco": 6.0, "ativo": true },
+    { "id": 7, "nome": "Suco Natural", "categoria": "bebidas", "preco": 9.0, "ativo": true },
+    { "id": 8, "nome": "Combo Frist (X-Burguer + Batata + Refri)", "categoria": "combos", "preco": 39.9, "ativo": true },
+    { "id": 9, "nome": "Combo Família", "categoria": "combos", "preco": 89.9, "ativo": false },
+    { "id": 10, "nome": "Brownie com Sorvete", "categoria": "sobremesas", "preco": 14.0, "ativo": true }
+  ],
+  "pedidos": [
+    {
+      "id": 1, "clienteId": 1, "entregadorId": 3,
+      "itens": [
+        { "produtoId": 1, "quantidade": 2, "precoUnitario": 22.9, "observacao": "sem cebola" },
+        { "produtoId": 6, "quantidade": 2, "precoUnitario": 6.0 }
+      ],
+      "taxaEntrega": 5.0, "total": 62.8, "formaPagamento": "pix", "status": "saiu_para_entrega",
+      "criadoEm": "2026-10-30T19:10:00.000Z"
+    },
+    {
+      "id": 2, "clienteId": 1,
+      "itens": [
+        { "produtoId": 8, "quantidade": 1, "precoUnitario": 39.9 }
+      ],
+      "taxaEntrega": 7.5, "total": 47.4, "formaPagamento": "cartao", "status": "recebido",
+      "criadoEm": "2026-10-31T12:00:00.000Z"
+    }
+  ],
+  "bairros": [
+    { "id": 1, "nome": "Vila Fictícia", "taxa": 5.0 },
+    { "id": 2, "nome": "Jardim Exemplo", "taxa": 6.5 },
+    { "id": 3, "nome": "Centro Demo", "taxa": 4.0 },
+    { "id": 4, "nome": "Parque Imaginário", "taxa": 7.5 },
+    { "id": 5, "nome": "Bairro Teste", "taxa": 8.0 }
+  ]
+}

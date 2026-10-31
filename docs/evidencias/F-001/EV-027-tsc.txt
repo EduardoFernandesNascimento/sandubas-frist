@@ -1,0 +1,7 @@
+# EV-027 · tsc
+# comando: node web/node_modules/typescript/bin/tsc --noEmit -p web/tsconfig.app.json
+# shell: bash
+# início: 2026-10-31T14:00:24.777Z
+# fim: 2026-10-31T14:00:25.060Z (0.3 s)
+# resultado: última linha
+# código de saída: 0
