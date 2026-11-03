@@ -483,20 +483,7 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 .logo-pequena { width: 44px; height: 44px; object-fit: cover; object-position: 50% 35%; border-radius: 50%; background: #fff; border: 2px solid var(--dourado); }
 .cabeca-pagina .logo-destaque { max-width: 180px; margin: -0.5rem 0 0; }
 
-/* ---------- "Meu token" ---------- */
-.codigo {
-  background: var(--marrom);
-  color: #fff6d5;
-  padding: var(--esp-3);
-  border-radius: 6px;
-  overflow-x: auto;
-  font-family: ui-monospace, Consolas, monospace;
-  font-size: 0.85rem;
-}
-.token-bruto { word-break: break-all; }
-.jwt-h { color: #ffb4a8; }
-.jwt-p { color: #f3dd8a; }
-.jwt-a { color: #9fd8ff; }
+/* ---------- Utilidades ---------- */
 .linha-resumo { display: contents; }
 
 /* ---------- Responsivo (celular 375px) ---------- */

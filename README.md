@@ -57,7 +57,7 @@ Senha de todos: `123456`
 ## Roteiro de demonstração
 
 1. Tentar abrir a área do cliente sem login (http://localhost:5173/cliente) → o React redireciona para o login. *(conferência manual)*
-2. Logar como cliente → mostrar o JWT recebido e o payload decodificado.
+2. Logar como cliente → o token JWT é salvo no `localStorage` (inspecionável em F12 → Application) e enviado no header `Authorization: Bearer <token>` em toda requisição.
 3. Montar e confirmar um pedido → a requisição leva o cabeçalho `Authorization: Bearer <token>`.
 4. Com o token de cliente, chamar `GET /pedidos` → a API responde 403.
 5. Logar como loja → aceitar o pedido e mudar os status.

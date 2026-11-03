@@ -44,9 +44,6 @@ export function Menu() {
               {l.para === '/cliente/carrinho' && quantidadeTotal > 0 && ` (${quantidadeTotal})`}
             </NavLink>
           ))}
-          <NavLink to="/meu-token" end>
-            Meu token
-          </NavLink>
           <span className="quem">
             {usuario.nome} ({usuario.perfil})
           </span>
