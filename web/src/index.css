@@ -23,6 +23,10 @@
   --borda: #ecd9b0;
   --borda-forte: #c9a96a;
 
+  /* Tipografia */
+  --fonte-display: "Sora", system-ui, "Segoe UI", Roboto, sans-serif;
+  --fonte-corpo: system-ui, "Segoe UI", Roboto, sans-serif;
+
   /* Espaçamento */
   --esp-1: 0.25rem;
   --esp-2: 0.5rem;
@@ -32,15 +36,16 @@
   --esp-6: 2rem;
 
   /* Raio e sombra */
-  --raio: 8px;
+  --raio: 10px;
+  --raio-card: 16px;
   --raio-pill: 999px;
-  --sombra: 0 2px 8px rgb(0 0 0 / 0.1);
-  --sombra-elevada: 0 6px 20px rgb(0 0 0 / 0.16);
+  --sombra: 0 2px 10px rgb(59 42 26 / 0.08);
+  --sombra-elevada: 0 12px 28px rgb(59 42 26 / 0.14);
 
   /* Transição */
-  --transicao: 150ms ease;
+  --transicao: 160ms ease;
 
-  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--fonte-corpo);
   color: var(--texto);
   background: var(--fundo);
 }
@@ -52,30 +57,38 @@ body {
   min-height: 100vh;
 }
 
-h1 { color: var(--vermelho); margin-top: 0; }
-h2 { font-size: 1rem; }
+h1 { color: var(--vermelho); margin-top: 0; font-family: var(--fonte-display); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 1rem; font-family: var(--fonte-display); font-weight: 700; }
+h3 { font-family: var(--fonte-display); font-weight: 700; }
 a { color: var(--vermelho); }
 
 /* ---------- Cabeçalho / navegação ---------- */
 .topo {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--esp-2);
   padding: var(--esp-3) var(--esp-4);
-  background: linear-gradient(90deg, var(--vermelho), var(--vermelho-escuro));
+  background: linear-gradient(90deg, rgb(179 25 30 / 0.94), rgb(138 18 22 / 0.94));
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   color: #fff;
   border-bottom: 4px solid var(--dourado);
+  box-shadow: 0 4px 18px rgb(59 42 26 / 0.18);
 }
 
 .marca {
   display: flex;
   align-items: center;
   gap: var(--esp-2);
+  font-family: var(--fonte-display);
   font-weight: 800;
   font-size: 1.25rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 .menu {
@@ -272,7 +285,17 @@ button[aria-pressed="true"] { outline: 3px solid var(--dourado); }
 .erro { color: var(--vermelho); margin: 0; }
 .aviso { background: #fde7c8; border-left: 4px solid var(--laranja); padding: var(--esp-2); border-radius: 4px; }
 .aviso.fechado { background: #fbe0de; border-left-color: var(--vermelho); }
-.aviso.ok { background: #fff1c9; border-left-color: var(--dourado); }
+.aviso.ok { background: #fff1c9; border-left-color: var(--dourado); animation: entrar 0.35s ease; }
+
+/* Entrada sutil de página e elementos */
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pagina, .cartao { animation: entrar 0.28s ease; }
+
+.preco, .total { font-variant-numeric: tabular-nums; }
 
 /* Empty state visual */
 .vazio {
@@ -316,12 +339,38 @@ button[aria-pressed="true"] { outline: 3px solid var(--dourado); }
 
 /* ---------- Cardápio ---------- */
 .categoria {
-  font-size: 1.25rem;
+  font-family: var(--fonte-display);
+  font-size: 1.3rem;
   color: var(--vermelho);
   border-bottom: 3px solid var(--dourado);
   padding-bottom: var(--esp-1);
   margin-top: var(--esp-5);
 }
+
+/* Chips de categoria (filtro rápido — iFood/UberEats) */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  margin: var(--esp-3) 0;
+}
+
+.chip {
+  font: inherit;
+  font-weight: 600;
+  color: var(--texto);
+  background: #fff;
+  border: 1.5px solid var(--borda-forte);
+  border-radius: var(--raio-pill);
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition: background var(--transicao), border-color var(--transicao), transform var(--transicao);
+}
+
+.chip:hover { border-color: var(--laranja); }
+.chip:active { transform: scale(0.96); }
+.chip.ativo { background: var(--vermelho); border-color: var(--vermelho); color: #fff; }
+.chip:focus-visible { outline: 3px solid var(--dourado); outline-offset: 2px; }
 
 .grade {
   list-style: none;
@@ -335,20 +384,26 @@ button[aria-pressed="true"] { outline: 3px solid var(--dourado); }
   display: flex;
   flex-direction: column;
   gap: var(--esp-2);
-  padding: var(--esp-3);
-  border: 1px solid var(--dourado);
-  border-radius: var(--raio);
-  background: var(--superficie-suave);
-  transition: border-color var(--transicao), box-shadow var(--transicao), transform var(--transicao);
+  padding: 0;
+  border: none;
+  border-radius: var(--raio-card);
+  background: var(--superficie);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  transition: box-shadow var(--transicao), transform var(--transicao);
 }
 
 .produto:hover {
-  border-color: var(--laranja);
   box-shadow: var(--sombra-elevada);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
-.produto-info { flex: 1; }
+.produto .produto-info { padding: 0 var(--esp-3) var(--esp-3); flex: 1; }
+.produto .preco { padding: 0 var(--esp-3) var(--esp-3); }
+.produto > button {
+  margin: 0 var(--esp-3) var(--esp-3);
+  border-radius: var(--raio-pill);
+}
 
 /* Foto do produto (única definição) */
 .foto {

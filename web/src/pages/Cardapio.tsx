@@ -24,6 +24,7 @@ export function Cardapio() {
   const [escolhido, setEscolhido] = useState<Produto | null>(null)
   const [aviso, setAviso] = useState('')
   const [busca, setBusca] = useState('')
+  const [categoriaAtiva, setCategoriaAtiva] = useState<string | null>(null)
   const { quantidadeTotal } = useCarrinho()
 
   useEffect(() => {
@@ -50,10 +51,11 @@ export function Cardapio() {
   const termo = busca.trim().toLowerCase()
   const visiveis = produtos.filter(
     (p) =>
-      !termo ||
-      p.nome.toLowerCase().includes(termo) ||
-      p.descricao.toLowerCase().includes(termo) ||
-      p.categoria.toLowerCase().includes(termo),
+      (!categoriaAtiva || p.categoria === categoriaAtiva) &&
+      (!termo ||
+        p.nome.toLowerCase().includes(termo) ||
+        p.descricao.toLowerCase().includes(termo) ||
+        p.categoria.toLowerCase().includes(termo)),
   )
   const gruposVisiveis = grupos
     .map((g) => ({ ...g, itens: g.itens.filter((p) => visiveis.includes(p)) }))
@@ -84,6 +86,27 @@ export function Cardapio() {
           placeholder="Por nome, descrição ou categoria…"
         />
       </label>
+      <div className="chips" role="group" aria-label="Filtrar por categoria">
+        <button
+          type="button"
+          className={`chip${categoriaAtiva === null ? ' ativo' : ''}`}
+          aria-pressed={categoriaAtiva === null}
+          onClick={() => setCategoriaAtiva(null)}
+        >
+          Todos
+        </button>
+        {grupos.map((g) => (
+          <button
+            key={g.chave}
+            type="button"
+            className={`chip${categoriaAtiva === g.chave ? ' ativo' : ''}`}
+            aria-pressed={categoriaAtiva === g.chave}
+            onClick={() => setCategoriaAtiva(categoriaAtiva === g.chave ? null : g.chave)}
+          >
+            {g.titulo}
+          </button>
+        ))}
+      </div>
       {carregando && (
         <>
           <p>Carregando…</p>
