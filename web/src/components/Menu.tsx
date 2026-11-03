@@ -34,7 +34,7 @@ export function Menu() {
     <header className="topo">
       <span className="marca">
         <Logo tamanho="pequena" />
-        <span>Sanduba's Frist</span>
+        <span>First Sanduba's</span>
       </span>
       {usuario && (
         <nav aria-label="Menu principal" className="menu">

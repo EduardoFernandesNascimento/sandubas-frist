@@ -515,11 +515,11 @@ describe('produtos da loja', () => {
 
   it('[REQ-022] AUD-001: o nome continua no item do pedido depois de pausar o produto', async () => {
     const p = (await novoPedido(BASICO)).body;
-    expect(p.itens[0].nome).toBe('X-Burguer Frist');
+    expect(p.itens[0].nome).toBe('X-Burguer First');
     await (await comToken('loja@demo.com')).patch('/produtos/1', { ativo: false });
     const meus = await request(app).get('/pedidos/meus').set('Authorization', await token());
     const item = meus.body.find((x: Obj) => x.id === p.id).itens[0];
-    expect(item.nome).toBe('X-Burguer Frist');
+    expect(item.nome).toBe('X-Burguer First');
   });
 });
 

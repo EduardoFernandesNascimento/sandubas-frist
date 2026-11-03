@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Sanduba's Frist API
+  title: First Sanduba's API
   version: 3.0.0
   description: Contrato da F-001 (login, cadastro e cardápio), da F-002 (loja, bairros, endereços, pedido do cliente e pagamento simulado) e da F-003 (painel da loja, cadastro de produtos e bairros, atribuição e entregas do entregador). Trabalho acadêmico, dados fictícios.
   license:

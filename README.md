@@ -1,4 +1,4 @@
-# Sanduba's Frist
+# First Sanduba's
 
 Sistema de delivery de uma lanchonete, feito como **trabalho acadêmico**. Roda só na sua máquina e usa apenas **dados fictícios** (usuários, endereços, pedidos e pagamento simulado).
 

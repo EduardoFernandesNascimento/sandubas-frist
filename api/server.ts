@@ -1,4 +1,4 @@
-// API do Sanduba's Frist (DOC-01 p.5): Express num único arquivo, dados em db.json. [REQ-050]
+// API do First Sanduba's (DOC-01 p.5): Express num único arquivo, dados em db.json. [REQ-050]
 import express, { type NextFunction, type Request, type Response } from 'express';
 import cors from 'cors';
 import jwt, { type SignOptions } from 'jsonwebtoken';

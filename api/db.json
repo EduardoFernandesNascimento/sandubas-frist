@@ -44,7 +44,7 @@
   "produtos": [
     {
       "id": 1,
-      "nome": "X-Burguer Frist",
+      "nome": "X-Burguer First",
       "categoria": "lanches",
       "preco": 22.9,
       "ativo": true,
@@ -197,14 +197,14 @@
     },
     {
       "id": 8,
-      "nome": "Combo Frist (X-Burguer + Batata + Refri)",
+      "nome": "Combo First (X-Burguer + Batata + Refri)",
       "categoria": "combos",
       "preco": 39.9,
       "ativo": true,
-      "descricao": "X-Burguer Frist, batata frita e refrigerante.",
+      "descricao": "X-Burguer First, batata frita e refrigerante.",
       "foto": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop&crop=center",
       "ingredientes": [
-        "X-Burguer Frist",
+        "X-Burguer First",
         "batata frita",
         "refrigerante"
       ],
@@ -269,7 +269,7 @@
       "itens": [
         {
           "produtoId": 1,
-          "nome": "X-Burguer Frist",
+          "nome": "X-Burguer First",
           "quantidade": 2,
           "precoUnitario": 22.9,
           "observacao": "sem cebola"
@@ -320,7 +320,7 @@
       "itens": [
         {
           "produtoId": 8,
-          "nome": "Combo Frist (X-Burguer + Batata + Refri)",
+          "nome": "Combo First (X-Burguer + Batata + Refri)",
           "quantidade": 1,
           "precoUnitario": 39.9
         }
@@ -348,7 +348,7 @@
       "itens": [
         {
           "produtoId": 1,
-          "nome": "X-Burguer Frist",
+          "nome": "X-Burguer First",
           "quantidade": 1,
           "precoUnitario": 22.9
         }
