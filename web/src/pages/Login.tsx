@@ -4,7 +4,6 @@ import type { Produto } from '../../../shared/tipos'
 import { inicioDoPerfil, useSessao } from '../contexts/SessaoContext'
 import { CHAVE_AVISO, api, mensagemDeErro } from '../services/api'
 import { Logo } from '../components/Logo'
-import { FotoProduto } from '../components/FotoProduto'
 import { moeda } from '../services/formatar'
 
 // Usuários fictícios da demonstração (DOC-01 p.8).
@@ -16,8 +15,8 @@ const usuariosTeste = [
 
 const INTERVALO_CARROSSEL_MS = 4000
 
-// Carrossel de destaques (coluna da esquerda): foto real, nome, descrição e preço.
-function CarrosselDestaques() {
+// Carrossel compacto no topo do card: foto, selo, nome e preço sobrepostos.
+function CarrosselTopo() {
   const [produtos, setProdutos] = useState<Produto[]>([])
   const [indice, setIndice] = useState(0)
 
@@ -43,11 +42,8 @@ function CarrosselDestaques() {
 
   if (produtos.length === 0) {
     return (
-      <div className="carrossel-item vazio" role="status">
-        <span className="icone-vazio" aria-hidden="true">
-          🍔
-        </span>
-        <p>Buscando destaques…</p>
+      <div className="carrossel-topo" aria-hidden="true">
+        <span className="icone-vazio">🍔</span>
       </div>
     )
   }
@@ -58,32 +54,32 @@ function CarrosselDestaques() {
 
   return (
     <>
-      <div className="carrossel-item">
-        <FotoProduto foto={atual.foto} nome={atual.nome} tamanho="grande" />
-        <div className="carrossel-info">
-          <h3>{atual.nome}</h3>
-          <p className="detalhe">{atual.descricao}</p>
+      <div className="carrossel-topo" aria-roledescription="carrossel" aria-label="Promoções em destaque">
+        <img src={atual.foto} alt="" className="banner-imagem" loading="lazy" />
+        <span className="carrossel-selo">🔥 Promoção</span>
+        <div className="carrossel-overlay">
+          <h2>{atual.nome}</h2>
           <p className="preco">{moeda(atual.preco)}</p>
         </div>
       </div>
       <div className="carrossel-controles">
-        <button type="button" className="carrossel-seta" aria-label="Destaque anterior" onClick={anterior}>
+        <button type="button" className="carrossel-seta" aria-label="Promoção anterior" onClick={anterior}>
           ←
         </button>
-        <div className="carrossel-pontos" role="tablist" aria-label="Escolher destaque">
+        <div className="carrossel-pontos" role="tablist" aria-label="Escolher promoção">
           {produtos.map((p, i) => (
             <button
               key={p.id}
               type="button"
               role="tab"
               aria-selected={i === indice}
-              aria-label={`Destaque ${i + 1}: ${p.nome}`}
+              aria-label={`Promoção ${i + 1}: ${p.nome}`}
               className={`ponto${i === indice ? ' ativo' : ''}`}
               onClick={() => setIndice(i)}
             />
           ))}
         </div>
-        <button type="button" className="carrossel-seta" aria-label="Próximo destaque" onClick={proximo}>
+        <button type="button" className="carrossel-seta" aria-label="Próxima promoção" onClick={proximo}>
           →
         </button>
       </div>
@@ -128,60 +124,56 @@ export function Login() {
 
   return (
     <main className="login-page">
-      <section className="login-visual" aria-labelledby="titulo-destaques">
-        <div className="login-cabeca">
-          <h2 id="titulo-destaques">Destaques</h2>
-          <span className="selo">🔥 Promoção</span>
-        </div>
-        <CarrosselDestaques />
-      </section>
-      <div className="login-form">
-        <Logo />
-        <h1>Entrar</h1>
-        {aviso && (
-          <p className="aviso" role="status">
-            {aviso}
-          </p>
-        )}
-        <form onSubmit={enviar}>
-          <label>
-            E-mail
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
-          </label>
-          <label>
-            Senha
-            <input
-              type="password"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              required
-              autoComplete="current-password"
-            />
-          </label>
-          {erro && (
-            <p className="erro" role="alert">
-              {erro}
+      <div className="login-card">
+        <CarrosselTopo />
+        <div className="login-corpo">
+          <Logo />
+          <h1>Entrar</h1>
+          {aviso && (
+            <p className="aviso" role="status">
+              {aviso}
             </p>
           )}
-          <button type="submit" disabled={enviando}>
-            {enviando ? 'Entrando…' : 'Entrar'}
-          </button>
-        </form>
-        <p>
-          Não tem conta? <Link to="/cadastro">Cadastre-se</Link>
-        </p>
-        <section className="teste" aria-labelledby="titulo-teste">
-          <h2 id="titulo-teste">Usuários de teste (senha 123456)</h2>
-          <ul>
-            {usuariosTeste.map((u) => (
-              <li key={u.email}>
-                <button type="button" className="link" onClick={() => preencher(u.email)}>
-                  {u.perfil}: {u.email}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
+          <form onSubmit={enviar}>
+            <label>
+              E-mail
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
+            </label>
+            <label>
+              Senha
+              <input
+                type="password"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                required
+                autoComplete="current-password"
+              />
+            </label>
+            {erro && (
+              <p className="erro" role="alert">
+                {erro}
+              </p>
+            )}
+            <button type="submit" disabled={enviando}>
+              {enviando ? 'Entrando…' : 'Entrar'}
+            </button>
+          </form>
+          <p>
+            Não tem conta? <Link to="/cadastro">Cadastre-se</Link>
+          </p>
+          <section className="teste" aria-labelledby="titulo-teste">
+            <h2 id="titulo-teste">Usuários de teste (senha 123456)</h2>
+            <ul>
+              {usuariosTeste.map((u) => (
+                <li key={u.email}>
+                  <button type="button" className="link" onClick={() => preencher(u.email)}>
+                    {u.perfil}: {u.email}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
       </div>
     </main>
   )

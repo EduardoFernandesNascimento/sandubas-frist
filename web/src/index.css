@@ -554,103 +554,97 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 .linha-resumo { display: contents; }
 .resumo dd { word-break: break-word; }
 
-/* ---------- Login: lado a lado harmonioso ---------- */
+/* ---------- Login: card único centralizado e compacto ---------- */
 .login-page {
-  max-width: 900px;
+  max-width: 420px;
   margin: var(--esp-6) auto;
   padding: 0 var(--esp-4);
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* mesma largura */
-  gap: var(--esp-5);
-  align-items: stretch; /* mesma altura */
 }
 
-.login-visual,
-.login-form {
-  min-height: 520px;
-  border-radius: 20px;
+.login-card {
+  background: var(--superficie);
+  border-radius: 18px;
+  overflow: hidden;
   box-shadow: var(--sombra-elevada);
+  animation: entrar 0.28s ease;
 }
 
-.login-visual {
-  background: linear-gradient(160deg, #fff3cf, #fde7c8);
-  padding: var(--esp-5);
-  display: flex;
-  flex-direction: column;
+/* Carrossel compacto no topo do card */
+.carrossel-topo {
+  position: relative;
+  height: 170px;
+  background: linear-gradient(135deg, #fde7c8, #ffd9b8);
 }
 
-.login-cabeca {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--esp-4);
+.carrossel-topo .banner-imagem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.login-cabeca h2 { margin: 0; font-size: 1.15rem; }
-
-.selo {
+.carrossel-selo {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
   background: var(--laranja);
   color: #fff;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 800;
-  padding: 0.22rem 0.65rem;
+  padding: 0.2rem 0.6rem;
   border-radius: var(--raio-pill);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-}
-
-.carrossel-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.carrossel-item .foto-grande {
-  border-radius: 14px;
   box-shadow: var(--sombra);
-  aspect-ratio: 4 / 3;
 }
 
-.carrossel-info { margin-top: var(--esp-3); }
-.carrossel-info h3 { margin: 0 0 0.25rem; font-size: 1.1rem; }
-.carrossel-info .preco { font-size: 1.25rem; }
+.carrossel-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2rem 1rem 0.7rem;
+  background: linear-gradient(to top, rgb(20 10 5 / 0.78), rgb(20 10 5 / 0.05));
+  color: #fff;
+}
+
+.carrossel-overlay h2 { margin: 0; font-size: 1rem; text-shadow: 0 1px 3px rgb(0 0 0 / 0.4); }
+.carrossel-overlay .preco { margin: 0.15rem 0 0; color: #ffd9b8; font-size: 1.05rem; }
 
 .carrossel-controles {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--esp-3);
-  margin-top: auto;
-  padding-top: var(--esp-4);
+  padding: 0.4rem 0.75rem;
 }
 
 .carrossel-seta {
-  background: var(--dourado);
-  color: var(--texto);
-  border-radius: var(--raio-pill);
-  width: 2.2rem;
-  height: 2.2rem;
+  background: none;
+  color: var(--vermelho);
+  width: 1.8rem;
+  height: 1.8rem;
   padding: 0;
+  border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
-.carrossel-seta:hover { background: var(--dourado-escuro); color: #fff; }
+.carrossel-seta:hover { background: #fbe0de; }
 
-.carrossel-pontos { display: flex; gap: 0.45rem; }
+.carrossel-pontos { display: flex; gap: 0.4rem; }
 
-.login-form {
-  background: var(--superficie);
-  padding: var(--esp-5);
+/* Corpo do formulário */
+.login-corpo {
+  padding: 1.25rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
 }
 
-.login-form .logo { margin: 0 auto 0.5rem; }
-.login-form h1 { text-align: center; margin-bottom: 0.75rem; }
-.login-form .teste { margin-top: var(--esp-4); }
+.login-corpo .logo { margin: 0 auto 0.5rem; }
+.login-corpo h1 { text-align: center; margin: 0 0 0.75rem; font-size: 1.3rem; }
+.login-corpo .teste { margin-top: var(--esp-4); padding-top: var(--esp-3); border-top: 1px dashed var(--borda-forte); }
 
 /* ---------- Responsivo ---------- */
 body { overflow-x: hidden; }
@@ -664,10 +658,9 @@ body { overflow-x: hidden; }
   .foto-grande { aspect-ratio: 4 / 3; }
 }
 
-/* Login: empilha em telas estreitas (mantém harmonia) */
+/* Login: card único já é compacto; margem mínima em telas pequenas */
 @media (max-width: 900px) {
-  .login-page { grid-template-columns: 1fr; max-width: 480px; gap: var(--esp-4); }
-  .login-visual, .login-form { min-height: 0; }
+  .login-page { max-width: 420px; }
 }
 
 /* Celular (≤480px): compactação máxima */
