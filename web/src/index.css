@@ -485,14 +485,35 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 
 /* ---------- Utilidades ---------- */
 .linha-resumo { display: contents; }
+.resumo dd { word-break: break-word; }
 
-/* ---------- Responsivo (celular 375px) ---------- */
+/* ---------- Responsivo ---------- */
+body { overflow-x: hidden; }
+
+/* Tablet (≤768px): ajusta margens, grids e cabeçalho */
+@media (max-width: 768px) {
+  .pagina, .cartao { margin: 1.25rem; }
+  .grade { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--esp-3); }
+  .topo { gap: var(--esp-2); }
+  .menu { font-size: 0.95rem; }
+  .foto-grande { aspect-ratio: 4 / 3; }
+}
+
+/* Celular (≤480px): compactação máxima */
 @media (max-width: 480px) {
   .topo { padding: var(--esp-2) var(--esp-3); }
   .marca { font-size: 1.05rem; }
-  .menu { gap: var(--esp-2); font-size: 0.95rem; }
+  .menu { gap: var(--esp-2); font-size: 0.9rem; }
   .cartao, .pagina { margin: 1rem; padding: 1rem; }
   .grade { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--esp-3); }
   .foto-grande { aspect-ratio: 4 / 3; }
   .cabeca-pagina .logo-destaque { max-width: 140px; }
+  .status { font-size: 0.8rem; }
+  .acoes { justify-content: stretch; }
+  .acoes button, .acoes a { flex: 1 1 auto; text-align: center; }
+}
+
+/* Telas grandes (≥1200px): aproveita melhor a largura disponível */
+@media (min-width: 1200px) {
+  .pagina.larga { max-width: 1100px; }
 }
