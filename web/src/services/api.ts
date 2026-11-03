@@ -5,7 +5,12 @@ export const CHAVE_TOKEN = 'token'
 export const CHAVE_USUARIO = 'usuario'
 export const CHAVE_AVISO = 'aviso'
 
-export const api = axios.create({ baseURL: 'http://localhost:3000' })
+const apiBaseUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
+export const api = axios.create({ baseURL: apiBaseUrl })
+
+// Navegação SPA (definida pelo App ao montar)
+let navigateFn: ((path: string, options?: { replace?: boolean }) => void) | null = null;
+export function setNavigate(fn: typeof navigateFn) { navigateFn = fn; }
 
 // RJ02 (REQ-055): envia o token em toda requisição.
 api.interceptors.request.use((config) => {
@@ -25,7 +30,11 @@ api.interceptors.response.use(
       localStorage.removeItem(CHAVE_TOKEN)
       localStorage.removeItem(CHAVE_USUARIO)
       sessionStorage.setItem(CHAVE_AVISO, 'Sessão expirada, entre novamente')
-      window.location.assign('/login')
+      if (navigateFn) {
+        navigateFn('/login', { replace: true });
+      } else {
+        window.location.assign('/login')
+      }
     }
     if (status === 403) {
       return Promise.reject(new Error('Sem permissão para esta ação'))
@@ -40,6 +49,8 @@ export function mensagemDeErro(erro: unknown, padrao: string): string {
     const dados = erro.response?.data as { mensagem?: string } | undefined
     if (dados?.mensagem) return dados.mensagem
     if (!erro.response) return 'Não foi possível falar com a API (ela está rodando?)'
+    if (erro.code === 'ECONNABORTED') return 'Tempo de resposta esgotado'
+    if (erro.code === 'ERR_NETWORK') return 'Erro de rede — verifique sua conexão'
   }
   if (erro instanceof Error && erro.message) return erro.message
   return padrao

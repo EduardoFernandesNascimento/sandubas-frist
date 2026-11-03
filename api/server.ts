@@ -20,7 +20,13 @@ const caminhoDb = () => process.env.DB_ARQUIVO ?? join(pasta, 'db.json');
 const lerDb = (): Db => JSON.parse(readFileSync(caminhoDb(), 'utf8'));
 const gravarDb = (db: Db) => writeFileSync(caminhoDb(), JSON.stringify(db, null, 2));
 
-const segredo = () => process.env.JWT_SEGREDO ?? 'segredo-de-demonstracao';
+const segredo = () => {
+  const s = process.env.JWT_SEGREDO;
+  if (!s && process.env.NODE_ENV === 'production') {
+    throw new Error('JWT_SEGREDO obrigatório em produção');
+  }
+  return s ?? 'segredo-de-demonstracao';
+};
 const expiraEm = () => process.env.JWT_EXPIRA_EM ?? '5m'; // HUM-001 [REQ-062]
 
 // Só as chaves do contrato (MEM-001): nunca devolve senhaHash.
@@ -53,7 +59,8 @@ export function exigirPerfil(...perfis: Perfil[]) {
 }
 
 export const app = express();
-app.use(cors({ origin: 'http://localhost:5173' }));
+const corsOrigin = process.env.CORS_ORIGIN ?? 'http://localhost:5173';
+app.use(cors({ origin: corsOrigin }));
 app.use(express.json());
 
 app.post('/auth/login', (req, res) => {

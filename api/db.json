@@ -1,35 +1,427 @@
 {
-  "loja": {"aberta":true,"pedidoMinimo":10,"tempoPreparoMin":20,"tempoEntregaMin":15},
+  "loja": {
+    "aberta": true,
+    "pedidoMinimo": 10,
+    "tempoPreparoMin": 20,
+    "tempoEntregaMin": 15
+  },
   "usuarios": [
-    {"id":1,"nome":"Cliente Demo","email":"cliente@demo.com","perfil":"cliente","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0001"},
-    {"id":2,"nome":"Loja Demo","email":"loja@demo.com","perfil":"loja","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0002"},
-    {"id":3,"nome":"Entregador Demo","email":"entregador@demo.com","perfil":"entregador","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0003","disponivel":true},
-    {"id":4,"nome":"Entregador Dois","email":"entregador2@demo.com","perfil":"entregador","senhaHash":"$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2","telefone":"(11) 90000-0004","disponivel":true}
+    {
+      "id": 1,
+      "nome": "Cliente Demo",
+      "email": "cliente@demo.com",
+      "perfil": "cliente",
+      "senhaHash": "$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2",
+      "telefone": "(11) 90000-0001"
+    },
+    {
+      "id": 2,
+      "nome": "Loja Demo",
+      "email": "loja@demo.com",
+      "perfil": "loja",
+      "senhaHash": "$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2",
+      "telefone": "(11) 90000-0002"
+    },
+    {
+      "id": 3,
+      "nome": "Entregador Demo",
+      "email": "entregador@demo.com",
+      "perfil": "entregador",
+      "senhaHash": "$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2",
+      "telefone": "(11) 90000-0003",
+      "disponivel": true
+    },
+    {
+      "id": 4,
+      "nome": "Entregador Dois",
+      "email": "entregador2@demo.com",
+      "perfil": "entregador",
+      "senhaHash": "$2b$10$atAZQRClh5R1dLYACao9.egEy0ypTbkMwrDWTVbBOZ6PwsVPT2yT2",
+      "telefone": "(11) 90000-0004",
+      "disponivel": true
+    }
   ],
   "produtos": [
-    {"id":1,"nome":"X-Burguer Frist","categoria":"lanches","preco":22.9,"ativo":true,"descricao":"Hambúrguer artesanal com queijo, alface e tomate no pão brioche.","foto":"/img/x-burguer.svg","ingredientes":["pão brioche","hambúrguer","queijo","alface","tomate","cebola"],"adicionais":[{"nome":"Bacon","preco":4},{"nome":"Ovo","preco":2.5},{"nome":"Queijo extra","preco":3}]},
-    {"id":2,"nome":"X-Bacon Duplo","categoria":"lanches","preco":29.9,"ativo":true,"descricao":"Dois hambúrgueres, bacon crocante e cheddar.","foto":"/img/x-bacon.svg","ingredientes":["pão","hambúrguer","bacon","cheddar","molho da casa"],"adicionais":[{"nome":"Bacon","preco":4},{"nome":"Ovo","preco":2.5},{"nome":"Queijo extra","preco":3}]},
-    {"id":3,"nome":"Sanduba de Frango","categoria":"lanches","preco":24.5,"ativo":true,"descricao":"Filé de frango grelhado com maionese temperada.","foto":"/img/sanduba-frango.svg","ingredientes":["pão","frango grelhado","alface","tomate","maionese"],"adicionais":[{"nome":"Bacon","preco":4},{"nome":"Ovo","preco":2.5},{"nome":"Queijo extra","preco":3}]},
-    {"id":4,"nome":"Batata Frita","categoria":"porções","preco":15,"ativo":true,"descricao":"Porção de batata frita crocante.","foto":"/img/batata.svg","ingredientes":["batata","sal"],"adicionais":[{"nome":"Cheddar e bacon","preco":6}]},
-    {"id":5,"nome":"Onion Rings","categoria":"porções","preco":17.5,"ativo":true,"descricao":"Anéis de cebola empanados.","foto":"/img/onion-rings.svg","ingredientes":["cebola","empanado"],"adicionais":[{"nome":"Molho barbecue","preco":2}]},
-    {"id":6,"nome":"Refrigerante Lata","categoria":"bebidas","preco":6,"ativo":true,"descricao":"Refrigerante em lata 350 ml.","foto":"/img/refrigerante.svg","ingredientes":[],"adicionais":[]},
-    {"id":7,"nome":"Suco Natural","categoria":"bebidas","preco":9,"ativo":true,"descricao":"Suco natural de laranja 400 ml.","foto":"/img/suco.svg","ingredientes":["laranja"],"adicionais":[]},
-    {"id":8,"nome":"Combo Frist (X-Burguer + Batata + Refri)","categoria":"combos","preco":39.9,"ativo":true,"descricao":"X-Burguer Frist, batata frita e refrigerante.","foto":"/img/combo.svg","ingredientes":["X-Burguer Frist","batata frita","refrigerante"],"adicionais":[{"nome":"Bacon","preco":4},{"nome":"Ovo","preco":2.5},{"nome":"Queijo extra","preco":3}]},
-    {"id":9,"nome":"Combo Família","categoria":"combos","preco":89.9,"ativo":false,"descricao":"Dois X-Bacon, dois X-Burguer, batata grande e refrigerante 2 L.","foto":"/img/combo.svg","ingredientes":["X-Bacon","X-Burguer","batata","refrigerante 2 L"],"adicionais":[]},
-    {"id":10,"nome":"Brownie com Sorvete","categoria":"sobremesas","preco":14,"ativo":true,"descricao":"Brownie de chocolate com bola de sorvete de creme.","foto":"/img/brownie.svg","ingredientes":["brownie","sorvete de creme","calda de chocolate"],"adicionais":[{"nome":"Calda extra","preco":2}]}
+    {
+      "id": 1,
+      "nome": "X-Burguer Frist",
+      "categoria": "lanches",
+      "preco": 22.9,
+      "ativo": true,
+      "descricao": "Hambúrguer artesanal com queijo, alface e tomate no pão brioche.",
+      "foto": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop&crop=center",
+      "ingredientes": [
+        "pão brioche",
+        "hambúrguer",
+        "queijo",
+        "alface",
+        "tomate",
+        "cebola"
+      ],
+      "adicionais": [
+        {
+          "nome": "Bacon",
+          "preco": 4
+        },
+        {
+          "nome": "Ovo",
+          "preco": 2.5
+        },
+        {
+          "nome": "Queijo extra",
+          "preco": 3
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "X-Bacon Duplo",
+      "categoria": "lanches",
+      "preco": 29.9,
+      "ativo": true,
+      "descricao": "Dois hambúrgueres, bacon crocante e cheddar.",
+      "foto": "https://live.staticflickr.com/4110/5007282483_72ea82b4b3_b.jpg",
+      "ingredientes": [
+        "pão",
+        "hambúrguer",
+        "bacon",
+        "cheddar",
+        "molho da casa"
+      ],
+      "adicionais": [
+        {
+          "nome": "Bacon",
+          "preco": 4
+        },
+        {
+          "nome": "Ovo",
+          "preco": 2.5
+        },
+        {
+          "nome": "Queijo extra",
+          "preco": 3
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nome": "Sanduba de Frango",
+      "categoria": "lanches",
+      "preco": 24.5,
+      "ativo": true,
+      "descricao": "Filé de frango grelhado com maionese temperada.",
+      "foto": "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=400&h=300&fit=crop&crop=center",
+      "ingredientes": [
+        "pão",
+        "frango grelhado",
+        "alface",
+        "tomate",
+        "maionese"
+      ],
+      "adicionais": [
+        {
+          "nome": "Bacon",
+          "preco": 4
+        },
+        {
+          "nome": "Ovo",
+          "preco": 2.5
+        },
+        {
+          "nome": "Queijo extra",
+          "preco": 3
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "nome": "Batata Frita",
+      "categoria": "porções",
+      "preco": 15,
+      "ativo": true,
+      "descricao": "Porção de batata frita crocante.",
+      "foto": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop&crop=center",
+      "ingredientes": [
+        "batata",
+        "sal"
+      ],
+      "adicionais": [
+        {
+          "nome": "Cheddar e bacon",
+          "preco": 6
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "nome": "Onion Rings",
+      "categoria": "porções",
+      "preco": 17.5,
+      "ativo": true,
+      "descricao": "Anéis de cebola empanados.",
+      "foto": "https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&h=300&fit=crop&crop=center",
+      "ingredientes": [
+        "cebola",
+        "empanado"
+      ],
+      "adicionais": [
+        {
+          "nome": "Molho barbecue",
+          "preco": 2
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "nome": "Refrigerante Lata",
+      "categoria": "bebidas",
+      "preco": 6,
+      "ativo": true,
+      "descricao": "Refrigerante em lata 350 ml.",
+      "foto": "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop&crop=center",
+      "ingredientes": [],
+      "adicionais": []
+    },
+    {
+      "id": 7,
+      "nome": "Suco Natural",
+      "categoria": "bebidas",
+      "preco": 9,
+      "ativo": true,
+      "descricao": "Suco natural de laranja 400 ml.",
+      "foto": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&h=300&fit=crop&crop=center",
+      "ingredientes": [
+        "laranja"
+      ],
+      "adicionais": []
+    },
+    {
+      "id": 8,
+      "nome": "Combo Frist (X-Burguer + Batata + Refri)",
+      "categoria": "combos",
+      "preco": 39.9,
+      "ativo": true,
+      "descricao": "X-Burguer Frist, batata frita e refrigerante.",
+      "foto": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop&crop=center",
+      "ingredientes": [
+        "X-Burguer Frist",
+        "batata frita",
+        "refrigerante"
+      ],
+      "adicionais": [
+        {
+          "nome": "Bacon",
+          "preco": 4
+        },
+        {
+          "nome": "Ovo",
+          "preco": 2.5
+        },
+        {
+          "nome": "Queijo extra",
+          "preco": 3
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "nome": "Combo Família",
+      "categoria": "combos",
+      "preco": 89.9,
+      "ativo": false,
+      "descricao": "Dois X-Bacon, dois X-Burguer, batata grande e refrigerante 2 L.",
+      "foto": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop&crop=center",
+      "ingredientes": [
+        "X-Bacon",
+        "X-Burguer",
+        "batata",
+        "refrigerante 2 L"
+      ],
+      "adicionais": []
+    },
+    {
+      "id": 10,
+      "nome": "Brownie com Sorvete",
+      "categoria": "sobremesas",
+      "preco": 14,
+      "ativo": true,
+      "descricao": "Brownie de chocolate com bola de sorvete de creme.",
+      "foto": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&h=300&fit=crop&crop=center",
+      "ingredientes": [
+        "brownie",
+        "sorvete de creme",
+        "calda de chocolate"
+      ],
+      "adicionais": [
+        {
+          "nome": "Calda extra",
+          "preco": 2
+        }
+      ]
+    }
   ],
   "pedidos": [
-    {"id":1,"clienteId":1,"entregadorId":3,"enderecoId":1,"itens":[{"produtoId":1,"nome":"X-Burguer Frist","quantidade":2,"precoUnitario":22.9,"observacao":"sem cebola"},{"produtoId":6,"nome":"Refrigerante Lata","quantidade":2,"precoUnitario":6}],"taxaEntrega":5,"total":62.8,"formaPagamento":"pix","status":"saiu_para_entrega","criadoEm":"2026-10-30T19:10:00.000Z","historico":[{"status":"aguardando_pagamento","em":"2026-10-30T19:10:00.000Z"},{"status":"recebido","em":"2026-10-30T19:15:00.000Z"},{"status":"em_preparo","em":"2026-10-30T19:20:00.000Z"},{"status":"pronto","em":"2026-10-30T19:25:00.000Z"},{"status":"saiu_para_entrega","em":"2026-10-30T19:30:00.000Z"}]},
-    {"id":2,"clienteId":1,"enderecoId":1,"itens":[{"produtoId":8,"nome":"Combo Frist (X-Burguer + Batata + Refri)","quantidade":1,"precoUnitario":39.9}],"taxaEntrega":7.5,"total":47.4,"formaPagamento":"cartao","status":"recebido","criadoEm":"2026-10-31T12:00:00.000Z","historico":[{"status":"aguardando_pagamento","em":"2026-10-31T12:00:00.000Z"},{"status":"recebido","em":"2026-10-31T12:05:00.000Z"}]}
+    {
+      "id": 1,
+      "clienteId": 1,
+      "entregadorId": 3,
+      "enderecoId": 1,
+      "itens": [
+        {
+          "produtoId": 1,
+          "nome": "X-Burguer Frist",
+          "quantidade": 2,
+          "precoUnitario": 22.9,
+          "observacao": "sem cebola"
+        },
+        {
+          "produtoId": 6,
+          "nome": "Refrigerante Lata",
+          "quantidade": 2,
+          "precoUnitario": 6
+        }
+      ],
+      "taxaEntrega": 5,
+      "total": 62.8,
+      "formaPagamento": "pix",
+      "status": "entregue",
+      "criadoEm": "2026-10-30T19:10:00.000Z",
+      "historico": [
+        {
+          "status": "aguardando_pagamento",
+          "em": "2026-10-30T19:10:00.000Z"
+        },
+        {
+          "status": "recebido",
+          "em": "2026-10-30T19:15:00.000Z"
+        },
+        {
+          "status": "em_preparo",
+          "em": "2026-10-30T19:20:00.000Z"
+        },
+        {
+          "status": "pronto",
+          "em": "2026-10-30T19:25:00.000Z"
+        },
+        {
+          "status": "saiu_para_entrega",
+          "em": "2026-10-30T19:30:00.000Z"
+        },
+        {
+          "status": "entregue",
+          "em": "2026-11-03T22:37:28.634Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "clienteId": 1,
+      "enderecoId": 1,
+      "itens": [
+        {
+          "produtoId": 8,
+          "nome": "Combo Frist (X-Burguer + Batata + Refri)",
+          "quantidade": 1,
+          "precoUnitario": 39.9
+        }
+      ],
+      "taxaEntrega": 7.5,
+      "total": 47.4,
+      "formaPagamento": "cartao",
+      "status": "recebido",
+      "criadoEm": "2026-10-31T12:00:00.000Z",
+      "historico": [
+        {
+          "status": "aguardando_pagamento",
+          "em": "2026-10-31T12:00:00.000Z"
+        },
+        {
+          "status": "recebido",
+          "em": "2026-10-31T12:05:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "clienteId": 1,
+      "enderecoId": 1,
+      "itens": [
+        {
+          "produtoId": 1,
+          "nome": "X-Burguer Frist",
+          "quantidade": 1,
+          "precoUnitario": 22.9
+        }
+      ],
+      "taxaEntrega": 5,
+      "total": 27.9,
+      "formaPagamento": "pix",
+      "status": "entregue",
+      "criadoEm": "2026-11-03T22:21:12.148Z",
+      "historico": [
+        {
+          "status": "aguardando_pagamento",
+          "em": "2026-11-03T22:21:12.148Z"
+        },
+        {
+          "status": "recebido",
+          "em": "2026-11-03T22:21:16.805Z"
+        },
+        {
+          "status": "em_preparo",
+          "em": "2026-11-03T22:21:21.138Z"
+        },
+        {
+          "status": "pronto",
+          "em": "2026-11-03T22:21:25.467Z"
+        },
+        {
+          "status": "saiu_para_entrega",
+          "em": "2026-11-03T22:21:38.343Z"
+        },
+        {
+          "status": "entregue",
+          "em": "2026-11-03T22:21:42.756Z"
+        }
+      ],
+      "entregadorId": 3
+    }
   ],
   "bairros": [
-    {"id":1,"nome":"Vila Fictícia","taxa":5},
-    {"id":2,"nome":"Jardim Exemplo","taxa":6.5},
-    {"id":3,"nome":"Centro Demo","taxa":4},
-    {"id":4,"nome":"Parque Imaginário","taxa":7.5},
-    {"id":5,"nome":"Bairro Teste","taxa":8}
+    {
+      "id": 1,
+      "nome": "Vila Fictícia",
+      "taxa": 5
+    },
+    {
+      "id": 2,
+      "nome": "Jardim Exemplo",
+      "taxa": 6.5
+    },
+    {
+      "id": 3,
+      "nome": "Centro Demo",
+      "taxa": 4
+    },
+    {
+      "id": 4,
+      "nome": "Parque Imaginário",
+      "taxa": 7.5
+    },
+    {
+      "id": 5,
+      "nome": "Bairro Teste",
+      "taxa": 8
+    }
   ],
   "enderecos": [
-    {"id":1,"clienteId":1,"rua":"Rua das Demonstrações","numero":"100","complemento":"Apto 12","bairroId":1}
+    {
+      "id": 1,
+      "clienteId": 1,
+      "rua": "Rua das Demonstrações",
+      "numero": "100",
+      "complemento": "Apto 12",
+      "bairroId": 1
+    }
   ]
 }

@@ -23,6 +23,7 @@ export function Cardapio() {
   const [erro, setErro] = useState('')
   const [escolhido, setEscolhido] = useState<Produto | null>(null)
   const [aviso, setAviso] = useState('')
+  const [busca, setBusca] = useState('')
   const { quantidadeTotal } = useCarrinho()
 
   useEffect(() => {
@@ -45,6 +46,19 @@ export function Cardapio() {
     .map((g) => ({ ...g, itens: produtos.filter((p) => p.categoria === g.chave) }))
     .filter((g) => g.itens.length > 0)
 
+  // Busca por nome, descrição ou categoria (rubrica: busca com filter).
+  const termo = busca.trim().toLowerCase()
+  const visiveis = produtos.filter(
+    (p) =>
+      !termo ||
+      p.nome.toLowerCase().includes(termo) ||
+      p.descricao.toLowerCase().includes(termo) ||
+      p.categoria.toLowerCase().includes(termo),
+  )
+  const gruposVisiveis = grupos
+    .map((g) => ({ ...g, itens: g.itens.filter((p) => visiveis.includes(p)) }))
+    .filter((g) => g.itens.length > 0)
+
   return (
     <main className="pagina larga">
       <div className="cabeca-pagina">
@@ -61,6 +75,15 @@ export function Cardapio() {
           {aviso} <Link to="/cliente/carrinho">Ver carrinho ({quantidadeTotal})</Link>
         </p>
       )}
+      <label className="busca">
+        Buscar
+        <input
+          type="search"
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+          placeholder="Por nome, descrição ou categoria…"
+        />
+      </label>
       {carregando && <p>Carregando…</p>}
       {erro && (
         <p className="erro" role="alert">
@@ -68,8 +91,11 @@ export function Cardapio() {
         </p>
       )}
       {!carregando && !erro && grupos.length === 0 && <p>Nenhum produto disponível.</p>}
+      {!carregando && !erro && grupos.length > 0 && gruposVisiveis.length === 0 && (
+        <p>Nenhum produto encontrado.</p>
+      )}
 
-      {grupos.map((g, n) => (
+      {gruposVisiveis.map((g, n) => (
         <section key={g.chave} aria-labelledby={`cat-${n}`}>
           <h2 id={`cat-${n}`} className="categoria">
             {g.titulo}

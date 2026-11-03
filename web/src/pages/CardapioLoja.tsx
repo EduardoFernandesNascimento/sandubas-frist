@@ -51,6 +51,7 @@ export function CardapioLoja() {
   const [form, setForm] = useState<Form | null>(null)
   const [editando, setEditando] = useState<Produto | null>(null)
   const [ocupado, setOcupado] = useState(false)
+  const [busca, setBusca] = useState('')
 
   useEffect(() => {
     api
@@ -99,6 +100,9 @@ export function CardapioLoja() {
   }
 
   async function alternar(p: Produto) {
+    // Confirmação antes de pausar/ativar (rubrica: excluir com confirmação).
+    const acao = p.ativo ? 'Pausar' : 'Ativar'
+    if (!window.confirm(`${acao} o produto "${p.nome}"?`)) return
     try {
       const corpo: ProdutoAtivoEntrada = { ativo: !p.ativo }
       const { data } = await api.patch<Produto>(`/produtos/${p.id}`, corpo)
@@ -108,6 +112,12 @@ export function CardapioLoja() {
       setErro(mensagemDeErro(e, 'Não foi possível pausar ou ativar o produto'))
     }
   }
+
+  // Busca por nome ou categoria (rubrica: busca com filter).
+  const termo = busca.trim().toLowerCase()
+  const filtrados = produtos.filter((p) =>
+    !termo || p.nome.toLowerCase().includes(termo) || p.categoria.toLowerCase().includes(termo),
+  )
 
   const campo = (chave: keyof Form) => ({
     value: form ? form[chave] : '',
@@ -172,8 +182,20 @@ export function CardapioLoja() {
       )}
       {carregando && <p>Carregando…</p>}
       {!carregando && produtos.length === 0 && !erro && <p>Nenhum produto cadastrado.</p>}
+      {produtos.length > 0 && (
+        <label className="busca">
+          Buscar
+          <input
+            type="search"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            placeholder="Por nome ou categoria…"
+          />
+        </label>
+      )}
+      {!carregando && !erro && filtrados.length === 0 && <p>Nenhum produto encontrado.</p>}
       <ul className="lista">
-        {produtos.map((p) => (
+        {filtrados.map((p) => (
           <li key={p.id} className={`item-carrinho${p.ativo ? '' : ' pausado'}`}>
             <FotoProduto foto={p.foto} nome={p.nome} tamanho="pequena" />
             <div className="item-texto">
