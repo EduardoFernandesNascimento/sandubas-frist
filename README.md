@@ -2,6 +2,16 @@
 
 Sistema de delivery de uma lanchonete, feito como **trabalho acadêmico**. Roda só na sua máquina e usa apenas **dados fictícios** (usuários, endereços, pedidos e pagamento simulado).
 
+## Dupla
+
+| Nome | GitHub |
+|------|--------|
+| Eduardo Fernandes Nascimento | [@EduardoFernandesNascimento](https://github.com/EduardoFernandesNascimento) |
+| Carlos Wagner | [@cwcasado](https://github.com/cwcasado) |
+
+- API: TypeScript + Express, dados em `api/db.json`, login com JWT.
+- Front: React + Vite (TypeScript).
+
 - API: TypeScript + Express, dados em `api/db.json`, login com JWT.
 - Front: React + Vite (TypeScript).
 
