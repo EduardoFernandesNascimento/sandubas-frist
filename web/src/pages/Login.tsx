@@ -130,7 +130,7 @@ export function Login() {
         </div>
         <div className="login-form">
           <Logo />
-          <h1>Entrar</h1>
+          <h1 className="visually-hidden">Entrar</h1>
           {aviso && (
             <p className="aviso" role="status">
               {aviso}
