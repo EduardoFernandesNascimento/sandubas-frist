@@ -4,6 +4,7 @@ import type { Produto } from '../../../shared/tipos'
 import { inicioDoPerfil, useSessao } from '../contexts/SessaoContext'
 import { CHAVE_AVISO, api, mensagemDeErro } from '../services/api'
 import { Logo } from '../components/Logo'
+import { FotoProduto } from '../components/FotoProduto'
 import { moeda } from '../services/formatar'
 
 // Usuários fictícios da demonstração (DOC-01 p.8).
@@ -15,8 +16,8 @@ const usuariosTeste = [
 
 const INTERVALO_CARROSSEL_MS = 4000
 
-// Banner promocional rotativo: foto real, nome e preço do produto em destaque.
-function BannerPromocional() {
+// Carrossel de destaques (coluna da esquerda): foto real, nome, descrição e preço.
+function CarrosselDestaques() {
   const [produtos, setProdutos] = useState<Produto[]>([])
   const [indice, setIndice] = useState(0)
 
@@ -42,8 +43,11 @@ function BannerPromocional() {
 
   if (produtos.length === 0) {
     return (
-      <div className="login-banner" aria-hidden="true">
-        <span className="icone-vazio">🍔</span>
+      <div className="carrossel-item vazio" role="status">
+        <span className="icone-vazio" aria-hidden="true">
+          🍔
+        </span>
+        <p>Buscando destaques…</p>
       </div>
     )
   }
@@ -53,33 +57,37 @@ function BannerPromocional() {
   const proximo = () => setIndice((indice + 1) % produtos.length)
 
   return (
-    <div className="login-banner" aria-roledescription="carrossel" aria-label="Promoções em destaque">
-      <img src={atual.foto} alt="" className="banner-imagem" loading="lazy" />
-      <div className="banner-escurecer" aria-hidden="true" />
-      <div className="banner-conteudo">
-        <p className="banner-selo">🔥 Promoção da semana</p>
-        <h2>{atual.nome}</h2>
-        <p className="banner-preco">{moeda(atual.preco)}</p>
+    <>
+      <div className="carrossel-item">
+        <FotoProduto foto={atual.foto} nome={atual.nome} tamanho="grande" />
+        <div className="carrossel-info">
+          <h3>{atual.nome}</h3>
+          <p className="detalhe">{atual.descricao}</p>
+          <p className="preco">{moeda(atual.preco)}</p>
+        </div>
       </div>
-      <button type="button" className="banner-seta esquerda" aria-label="Promoção anterior" onClick={anterior}>
-        ‹
-      </button>
-      <button type="button" className="banner-seta direita" aria-label="Próxima promoção" onClick={proximo}>
-        ›
-      </button>
-      <div className="banner-pontos">
-        {produtos.map((p, i) => (
-          <button
-            key={p.id}
-            type="button"
-            className={`ponto${i === indice ? ' ativo' : ''}`}
-            aria-label={`Promoção ${i + 1}: ${p.nome}`}
-            aria-selected={i === indice}
-            onClick={() => setIndice(i)}
-          />
-        ))}
+      <div className="carrossel-controles">
+        <button type="button" className="carrossel-seta" aria-label="Destaque anterior" onClick={anterior}>
+          ←
+        </button>
+        <div className="carrossel-pontos" role="tablist" aria-label="Escolher destaque">
+          {produtos.map((p, i) => (
+            <button
+              key={p.id}
+              type="button"
+              role="tab"
+              aria-selected={i === indice}
+              aria-label={`Destaque ${i + 1}: ${p.nome}`}
+              className={`ponto${i === indice ? ' ativo' : ''}`}
+              onClick={() => setIndice(i)}
+            />
+          ))}
+        </div>
+        <button type="button" className="carrossel-seta" aria-label="Próximo destaque" onClick={proximo}>
+          →
+        </button>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -120,56 +128,60 @@ export function Login() {
 
   return (
     <main className="login-page">
-      <div className="login-card">
-        <BannerPromocional />
-        <div className="login-corpo">
-          <Logo />
-          <h1>Entrar</h1>
-          {aviso && (
-            <p className="aviso" role="status">
-              {aviso}
+      <section className="login-visual" aria-labelledby="titulo-destaques">
+        <div className="login-cabeca">
+          <h2 id="titulo-destaques">Destaques</h2>
+          <span className="selo">🔥 Promoção</span>
+        </div>
+        <CarrosselDestaques />
+      </section>
+      <div className="login-form">
+        <Logo />
+        <h1>Entrar</h1>
+        {aviso && (
+          <p className="aviso" role="status">
+            {aviso}
+          </p>
+        )}
+        <form onSubmit={enviar}>
+          <label>
+            E-mail
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
+          </label>
+          <label>
+            Senha
+            <input
+              type="password"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+              autoComplete="current-password"
+            />
+          </label>
+          {erro && (
+            <p className="erro" role="alert">
+              {erro}
             </p>
           )}
-          <form onSubmit={enviar}>
-            <label>
-              E-mail
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
-            </label>
-            <label>
-              Senha
-              <input
-                type="password"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
-                required
-                autoComplete="current-password"
-              />
-            </label>
-            {erro && (
-              <p className="erro" role="alert">
-                {erro}
-              </p>
-            )}
-            <button type="submit" disabled={enviando}>
-              {enviando ? 'Entrando…' : 'Entrar'}
-            </button>
-          </form>
-          <p>
-            Não tem conta? <Link to="/cadastro">Cadastre-se</Link>
-          </p>
-          <section className="teste" aria-labelledby="titulo-teste">
-            <h2 id="titulo-teste">Usuários de teste (senha 123456)</h2>
-            <ul>
-              {usuariosTeste.map((u) => (
-                <li key={u.email}>
-                  <button type="button" className="link" onClick={() => preencher(u.email)}>
-                    {u.perfil}: {u.email}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
+          <button type="submit" disabled={enviando}>
+            {enviando ? 'Entrando…' : 'Entrar'}
+          </button>
+        </form>
+        <p>
+          Não tem conta? <Link to="/cadastro">Cadastre-se</Link>
+        </p>
+        <section className="teste" aria-labelledby="titulo-teste">
+          <h2 id="titulo-teste">Usuários de teste (senha 123456)</h2>
+          <ul>
+            {usuariosTeste.map((u) => (
+              <li key={u.email}>
+                <button type="button" className="link" onClick={() => preencher(u.email)}>
+                  {u.perfil}: {u.email}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
     </main>
   )
