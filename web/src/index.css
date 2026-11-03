@@ -554,29 +554,41 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 .linha-resumo { display: contents; }
 .resumo dd { word-break: break-word; }
 
-/* ---------- Login: card único centralizado e compacto ---------- */
+/* ---------- Login: card único dividido (carrossel | formulário) ---------- */
 .login-page {
-  max-width: 420px;
+  max-width: 680px;
   margin: var(--esp-6) auto;
   padding: 0 var(--esp-4);
 }
 
 .login-card {
-  background: var(--superficie);
-  border-radius: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 20px;
   overflow: hidden;
+  background: var(--superficie);
   box-shadow: var(--sombra-elevada);
   animation: entrar 0.28s ease;
 }
 
-/* Carrossel compacto no topo do card */
-.carrossel-topo {
+/* Coluna da esquerda: carrossel ocupa toda a altura */
+.login-visual {
   position: relative;
-  height: 170px;
+  min-height: 460px;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(135deg, #fde7c8, #ffd9b8);
 }
 
-.carrossel-topo .banner-imagem {
+.carrossel-imagem {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.carrossel-imagem .banner-imagem {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -585,17 +597,18 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 
 .carrossel-selo {
   position: absolute;
-  top: 0.6rem;
-  left: 0.6rem;
+  top: 0.75rem;
+  left: 0.75rem;
   background: var(--laranja);
   color: #fff;
   font-size: 0.66rem;
   font-weight: 800;
-  padding: 0.2rem 0.6rem;
+  padding: 0.22rem 0.65rem;
   border-radius: var(--raio-pill);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   box-shadow: var(--sombra);
+  z-index: 2;
 }
 
 .carrossel-overlay {
@@ -603,7 +616,7 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 2rem 1rem 0.7rem;
+  padding: 2.5rem 1rem 0.75rem;
   background: linear-gradient(to top, rgb(20 10 5 / 0.78), rgb(20 10 5 / 0.05));
   color: #fff;
 }
@@ -615,14 +628,16 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.4rem 0.75rem;
+  padding: 0.45rem 0.75rem;
+  background: rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(4px);
 }
 
 .carrossel-seta {
-  background: none;
-  color: var(--vermelho);
-  width: 1.8rem;
-  height: 1.8rem;
+  background: var(--dourado);
+  color: var(--texto);
+  width: 1.9rem;
+  height: 1.9rem;
   padding: 0;
   border-radius: 50%;
   display: inline-flex;
@@ -631,20 +646,21 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
   font-size: 1rem;
 }
 
-.carrossel-seta:hover { background: #fbe0de; }
+.carrossel-seta:hover { background: var(--dourado-escuro); color: #fff; }
 
 .carrossel-pontos { display: flex; gap: 0.4rem; }
 
-/* Corpo do formulário */
-.login-corpo {
-  padding: 1.25rem 1.5rem 1.5rem;
+/* Coluna da direita: formulário */
+.login-form {
+  padding: var(--esp-5);
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
-.login-corpo .logo { margin: 0 auto 0.5rem; }
-.login-corpo h1 { text-align: center; margin: 0 0 0.75rem; font-size: 1.3rem; }
-.login-corpo .teste { margin-top: var(--esp-4); padding-top: var(--esp-3); border-top: 1px dashed var(--borda-forte); }
+.login-form .logo { margin: 0 auto 0.5rem; }
+.login-form h1 { text-align: center; margin: 0 0 0.75rem; font-size: 1.3rem; }
+.login-form .teste { margin-top: var(--esp-4); padding-top: var(--esp-3); border-top: 1px dashed var(--borda-forte); }
 
 /* ---------- Responsivo ---------- */
 body { overflow-x: hidden; }
@@ -658,9 +674,11 @@ body { overflow-x: hidden; }
   .foto-grande { aspect-ratio: 4 / 3; }
 }
 
-/* Login: card único já é compacto; margem mínima em telas pequenas */
-@media (max-width: 900px) {
-  .login-page { max-width: 420px; }
+/* Login: empilha (carrossel em cima) em telas estreitas */
+@media (max-width: 800px) {
+  .login-page { max-width: 480px; }
+  .login-card { grid-template-columns: 1fr; }
+  .login-visual { min-height: 200px; }
 }
 
 /* Celular (≤480px): compactação máxima */

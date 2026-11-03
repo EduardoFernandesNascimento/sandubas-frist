@@ -15,8 +15,8 @@ const usuariosTeste = [
 
 const INTERVALO_CARROSSEL_MS = 4000
 
-// Carrossel compacto no topo do card: foto, selo, nome e preço sobrepostos.
-function CarrosselTopo() {
+// Carrossel da coluna esquerda: foto ocupa toda a altura, nome e preço sobrepostos.
+function CarrosselLateral() {
   const [produtos, setProdutos] = useState<Produto[]>([])
   const [indice, setIndice] = useState(0)
 
@@ -42,7 +42,7 @@ function CarrosselTopo() {
 
   if (produtos.length === 0) {
     return (
-      <div className="carrossel-topo" aria-hidden="true">
+      <div className="carrossel-imagem" aria-hidden="true">
         <span className="icone-vazio">🍔</span>
       </div>
     )
@@ -54,7 +54,7 @@ function CarrosselTopo() {
 
   return (
     <>
-      <div className="carrossel-topo" aria-roledescription="carrossel" aria-label="Promoções em destaque">
+      <div className="carrossel-imagem" aria-roledescription="carrossel" aria-label="Promoções em destaque">
         <img src={atual.foto} alt="" className="banner-imagem" loading="lazy" />
         <span className="carrossel-selo">🔥 Promoção</span>
         <div className="carrossel-overlay">
@@ -125,8 +125,10 @@ export function Login() {
   return (
     <main className="login-page">
       <div className="login-card">
-        <CarrosselTopo />
-        <div className="login-corpo">
+        <div className="login-visual">
+          <CarrosselLateral />
+        </div>
+        <div className="login-form">
           <Logo />
           <h1>Entrar</h1>
           {aviso && (
