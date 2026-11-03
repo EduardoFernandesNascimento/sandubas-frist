@@ -542,6 +542,70 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 .linha-resumo { display: contents; }
 .resumo dd { word-break: break-word; }
 
+/* ---------- Login com carrossel de destaques ---------- */
+.login-page {
+  max-width: 1000px;
+  margin: var(--esp-6) auto;
+  padding: 0 var(--esp-4);
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: var(--esp-5);
+  align-items: center;
+}
+
+.destaques {
+  background: linear-gradient(160deg, #fff3cf, #fde7c8);
+  border-radius: var(--raio-card);
+  padding: var(--esp-5);
+  box-shadow: var(--sombra);
+  animation: entrar 0.28s ease;
+}
+
+.destaques-titulo { margin-top: 0; font-size: 1.2rem; }
+
+.destaque-item .foto-grande { border-radius: var(--raio); box-shadow: var(--sombra); }
+
+.destaque-info h3 { margin: 0.6rem 0 0.25rem; font-size: 1.1rem; }
+.destaque-info .preco { font-size: 1.2rem; }
+
+.destaque-controles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  margin-top: var(--esp-4);
+}
+
+.destaque-seta {
+  background: var(--dourado);
+  color: var(--texto);
+  border-radius: var(--raio-pill);
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.destaque-seta:hover { background: var(--dourado-escuro); color: #fff; }
+
+.destaque-pontos { display: flex; gap: 0.45rem; }
+
+.ponto {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--borda-forte);
+  opacity: 0.55;
+  transition: opacity var(--transicao), transform var(--transicao), background var(--transicao);
+}
+
+.ponto:hover { opacity: 1; }
+.ponto.ativo { background: var(--vermelho); opacity: 1; transform: scale(1.2); }
+
 /* ---------- Responsivo ---------- */
 body { overflow-x: hidden; }
 
@@ -552,6 +616,11 @@ body { overflow-x: hidden; }
   .topo { gap: var(--esp-2); }
   .menu { font-size: 0.95rem; }
   .foto-grande { aspect-ratio: 4 / 3; }
+}
+
+/* Login: empilha em telas estreitas */
+@media (max-width: 900px) {
+  .login-page { grid-template-columns: 1fr; max-width: 520px; gap: var(--esp-4); }
 }
 
 /* Celular (≤480px): compactação máxima */
