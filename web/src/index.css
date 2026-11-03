@@ -578,7 +578,7 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 /* Coluna da esquerda: carrossel ocupa toda a altura */
 .login-visual {
   position: relative;
-  min-height: 250px;
+  min-height: 200px;
   display: flex;
   flex-direction: column;
   background: linear-gradient(135deg, #fde7c8, #ffd9b8);
@@ -601,13 +601,13 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 
 .carrossel-selo {
   position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
+  top: 0.4rem;
+  left: 0.4rem;
   background: var(--laranja);
   color: #fff;
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   font-weight: 800;
-  padding: 0.18rem 0.55rem;
+  padding: 0.15rem 0.5rem;
   border-radius: var(--raio-pill);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -620,19 +620,19 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 1.5rem 0.9rem 0.6rem;
+  padding: 1.2rem 0.75rem 0.5rem;
   background: linear-gradient(to top, rgb(20 10 5 / 0.78), rgb(20 10 5 / 0.05));
   color: #fff;
 }
 
-.carrossel-overlay h2 { margin: 0; font-size: 0.9rem; text-shadow: 0 1px 3px rgb(0 0 0 / 0.4); }
-.carrossel-overlay .preco { margin: 0.1rem 0 0; color: #ffd9b8; font-size: 0.95rem; }
+.carrossel-overlay h2 { margin: 0; font-size: 0.85rem; text-shadow: 0 1px 3px rgb(0 0 0 / 0.4); }
+.carrossel-overlay .preco { margin: 0.1rem 0 0; color: #ffd9b8; font-size: 0.9rem; }
 
 .carrossel-controles {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.35rem 0.6rem;
+  padding: 0.3rem 0.5rem;
   background: rgb(255 255 255 / 0.55);
   backdrop-filter: blur(4px);
 }
@@ -640,35 +640,35 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 .carrossel-seta {
   background: var(--dourado);
   color: var(--texto);
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.5rem;
+  height: 1.5rem;
   padding: 0;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .carrossel-seta:hover { background: var(--dourado-escuro); color: #fff; }
 
-.carrossel-pontos { display: flex; gap: 0.35rem; }
+.carrossel-pontos { display: flex; gap: 0.3rem; }
 
 /* Coluna da direita: formulário */
 .login-form {
-  padding: 1rem 1.25rem;
+  padding: 0.85rem 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.login-form .logo { margin: 0 auto 0.25rem; width: 86px; height: auto; }
-.login-form h1 { text-align: center; margin: 0 0 0.5rem; font-size: 1.15rem; }
-.login-form form { gap: 0.5rem; }
-.login-form input { padding: 0.5rem 0.6rem; }
-.login-form .teste { margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed var(--borda-forte); }
-.login-form .teste h2 { font-size: 0.85rem; }
-.login-form .teste ul { margin: 0.25rem 0 0; }
+.login-form .logo { margin: 0 auto 0.2rem; width: 72px; height: auto; }
+.login-form h1 { text-align: center; margin: 0 0 0.4rem; font-size: 1.05rem; }
+.login-form form { gap: 0.4rem; }
+.login-form input { padding: 0.45rem 0.55rem; }
+.login-form .teste { margin-top: 0.6rem; padding-top: 0.4rem; border-top: 1px dashed var(--borda-forte); }
+.login-form .teste h2 { font-size: 0.8rem; }
+.login-form .teste ul { margin: 0.2rem 0 0; }
 
 /* ---------- Responsivo ---------- */
 body { overflow-x: hidden; }
