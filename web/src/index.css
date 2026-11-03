@@ -556,14 +556,18 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 
 /* ---------- Login: card único dividido (carrossel | formulário) ---------- */
 .login-page {
-  max-width: 680px;
-  margin: var(--esp-6) auto;
-  padding: 0 var(--esp-4);
+  min-height: 100vh; /* ocupa a viewport inteira */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
 .login-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  width: 100%;
+  max-width: 680px;
   border-radius: 20px;
   overflow: hidden;
   background: var(--superficie);
@@ -574,7 +578,7 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
 /* Coluna da esquerda: carrossel ocupa toda a altura */
 .login-visual {
   position: relative;
-  min-height: 460px;
+  min-height: 420px;
   display: flex;
   flex-direction: column;
   background: linear-gradient(135deg, #fde7c8, #ffd9b8);
@@ -676,7 +680,6 @@ body { overflow-x: hidden; }
 
 /* Login: empilha (carrossel em cima) em telas estreitas */
 @media (max-width: 800px) {
-  .login-page { max-width: 480px; }
   .login-card { grid-template-columns: 1fr; }
   .login-visual { min-height: 200px; }
 }
