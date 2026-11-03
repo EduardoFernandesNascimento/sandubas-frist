@@ -398,10 +398,22 @@ button[aria-pressed="true"] { outline: 3px solid var(--dourado); }
   transform: translateY(-3px);
 }
 
-.produto .produto-info { padding: 0 var(--esp-3) var(--esp-3); flex: 1; }
-.produto .preco { padding: 0 var(--esp-3) var(--esp-3); }
+.produto .produto-info {
+  padding: 0 var(--esp-3);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.produto .descricao {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.produto .preco { margin-top: 0.5rem; }
 .produto > button {
-  margin: 0 var(--esp-3) var(--esp-3);
+  margin: var(--esp-2) var(--esp-3) var(--esp-3);
+  margin-top: auto; /* ancora o botão na base do card */
   border-radius: var(--raio-pill);
 }
 
@@ -548,9 +560,9 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
   margin: var(--esp-6) auto;
   padding: 0 var(--esp-4);
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
+  grid-template-columns: 1fr 1fr; /* simetria: colunas de mesma largura */
   gap: var(--esp-5);
-  align-items: center;
+  align-items: stretch; /* mesma altura nas duas colunas */
 }
 
 .destaques {
@@ -559,21 +571,42 @@ address { font-style: normal; font-weight: 600; margin: 0.25rem 0; }
   padding: var(--esp-5);
   box-shadow: var(--sombra);
   animation: entrar 0.28s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .destaques-titulo { margin-top: 0; font-size: 1.2rem; }
 
+.destaque-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .destaque-item .foto-grande { border-radius: var(--raio); box-shadow: var(--sombra); }
 
+.destaque-info {
+  display: flex;
+  flex-direction: column;
+  min-height: 130px; /* altura estável ao trocar de produto */
+}
+
 .destaque-info h3 { margin: 0.6rem 0 0.25rem; font-size: 1.1rem; }
-.destaque-info .preco { font-size: 1.2rem; }
+.destaque-info .detalhe {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.destaque-info .preco { margin-top: auto; font-size: 1.2rem; }
 
 .destaque-controles {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--esp-3);
-  margin-top: var(--esp-4);
+  margin-top: auto;
+  padding-top: var(--esp-3);
 }
 
 .destaque-seta {
@@ -622,6 +655,11 @@ body { overflow-x: hidden; }
 @media (max-width: 900px) {
   .login-page { grid-template-columns: 1fr; max-width: 520px; gap: var(--esp-4); }
 }
+
+/* Formulário de login: preenche a coluna (simetria com o carrossel) */
+.login-form { display: flex; flex-direction: column; }
+.login-form form { flex: 1; }
+.login-form .teste { margin-top: auto; }
 
 /* Celular (≤480px): compactação máxima */
 @media (max-width: 480px) {
