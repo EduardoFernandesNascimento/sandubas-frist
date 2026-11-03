@@ -3,6 +3,7 @@ import type { Adicional, Produto, ProdutoAtivoEntrada, ProdutoEntrada } from '..
 import { api, mensagemDeErro } from '../services/api'
 import { moeda } from '../services/formatar'
 import { FotoProduto } from '../components/FotoProduto'
+import { Trilha } from '../components/Trilha'
 
 interface Form {
   nome: string
@@ -126,6 +127,7 @@ export function CardapioLoja() {
 
   return (
     <main className="pagina larga">
+      <Trilha para="/loja" rotulo="o painel de pedidos" atual="Cardápio da loja" />
       <h1>Cardápio da loja</h1>
       {erro && (
         <p className="erro" role="alert">
@@ -155,7 +157,7 @@ export function CardapioLoja() {
             <textarea {...campo('descricao')} rows={2} />
           </label>
           <label>
-            Foto (emoji ou caminho, ex.: /img/x-burguer.svg)
+            Foto (emoji ou URL de imagem, ex.: https://…/foto.jpg)
             <input {...campo('foto')} />
           </label>
           <label>
@@ -180,8 +182,20 @@ export function CardapioLoja() {
           </div>
         </form>
       )}
-      {carregando && <p>Carregando…</p>}
-      {!carregando && produtos.length === 0 && !erro && <p>Nenhum produto cadastrado.</p>}
+      {carregando && (
+        <>
+          <p>Carregando…</p>
+          <div className="skeleton skeleton-bloco" aria-hidden="true" />
+        </>
+      )}
+      {!carregando && produtos.length === 0 && !erro && (
+        <div className="vazio" role="status">
+          <span className="icone-vazio" aria-hidden="true">
+            🍽️
+          </span>
+          <p>Nenhum produto cadastrado ainda.</p>
+        </div>
+      )}
       {produtos.length > 0 && (
         <label className="busca">
           Buscar
@@ -193,7 +207,14 @@ export function CardapioLoja() {
           />
         </label>
       )}
-      {!carregando && !erro && filtrados.length === 0 && <p>Nenhum produto encontrado.</p>}
+      {!carregando && !erro && filtrados.length === 0 && (
+        <div className="vazio" role="status">
+          <span className="icone-vazio" aria-hidden="true">
+            🔍
+          </span>
+          <p>Nenhum produto encontrado para "{busca}".</p>
+        </div>
+      )}
       <ul className="lista">
         {filtrados.map((p) => (
           <li key={p.id} className={`item-carrinho${p.ativo ? '' : ' pausado'}`}>

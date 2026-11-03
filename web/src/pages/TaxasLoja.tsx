@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react'
 import type { Bairro, BairroEntrada } from '../../../shared/tipos'
 import { api, mensagemDeErro } from '../services/api'
 import { moeda } from '../services/formatar'
+import { Trilha } from '../components/Trilha'
 
 function numero(texto: string): number {
   return Number(texto.replace(',', '.'))
@@ -53,14 +54,27 @@ export function TaxasLoja() {
 
   return (
     <main className="pagina">
+      <Trilha para="/loja" rotulo="o painel de pedidos" atual="Taxas por bairro" />
       <h1>Taxas por bairro</h1>
       {erro && (
         <p className="erro" role="alert">
           {erro}
         </p>
       )}
-      {carregando && <p>Carregando…</p>}
-      {!carregando && bairros.length === 0 && !erro && <p>Nenhum bairro cadastrado.</p>}
+      {carregando && (
+        <>
+          <p>Carregando…</p>
+          <div className="skeleton skeleton-bloco" aria-hidden="true" />
+        </>
+      )}
+      {!carregando && bairros.length === 0 && !erro && (
+        <div className="vazio" role="status">
+          <span className="icone-vazio" aria-hidden="true">
+            📍
+          </span>
+          <p>Nenhum bairro cadastrado.</p>
+        </div>
+      )}
       <ul className="lista">
         {bairros.map((b) => (
           <li key={b.id} className="item-carrinho">

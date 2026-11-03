@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import type { PagamentoEntrada, Pedido, StatusPedido } from '../../../shared/tipos'
+import { Link, useNavigate } from 'react-router-dom'
+import type { PagamentoEntrada, Pedido, Produto, StatusPedido } from '../../../shared/tipos'
 import { Historico } from '../components/Historico'
+import { Trilha } from '../components/Trilha'
+import { useCarrinho } from '../contexts/CarrinhoContext'
 import { api, mensagemDeErro } from '../services/api'
 import { moeda, rotuloPagamento, rotuloStatus } from '../services/formatar'
 
@@ -16,6 +18,8 @@ export function MeusPedidos() {
   const [destaques, setDestaques] = useState<number[]>([])
   const [banner, setBanner] = useState('')
   const anteriores = useRef<Map<number, StatusPedido> | null>(null)
+  const { adicionar } = useCarrinho()
+  const navegar = useNavigate()
 
   useEffect(() => {
     let ativo = true
@@ -73,21 +77,58 @@ export function MeusPedidos() {
     }
   }
 
+  // Reordering (Baymard): recarrega o carrinho com os itens de um pedido anterior.
+  function pedirDeNovo(p: Pedido) {
+    for (const i of p.itens) {
+      const produto: Produto = {
+        id: i.produtoId,
+        nome: i.nome ?? `Produto ${i.produtoId}`,
+        categoria: '',
+        preco: i.precoUnitario,
+        ativo: true,
+        descricao: '',
+        foto: '',
+        ingredientes: [],
+        adicionais: i.adicionais ?? [],
+      }
+      adicionar({
+        produto,
+        quantidade: i.quantidade,
+        adicionais: i.adicionais ?? [],
+        removidos: i.removidos ?? [],
+        observacao: i.observacao ?? '',
+      })
+    }
+    navegar('/cliente/carrinho')
+  }
+
   return (
     <main className="pagina">
+      <Trilha para="/cliente" rotulo="o cardápio" atual="Meus pedidos" />
       <h1>Meus pedidos</h1>
       <p className="detalhe">Atualiza sozinho a cada 5 segundos.</p>
       <div aria-live="polite">{banner && <p className="banner-status">Status atualizado! {banner}</p>}</div>
-      {carregando && <p>Carregando…</p>}
+      {carregando && (
+        <>
+          <p>Carregando…</p>
+          <div className="skeleton skeleton-bloco" aria-hidden="true" />
+          <div className="skeleton skeleton-bloco" aria-hidden="true" />
+        </>
+      )}
       {erro && (
         <p className="erro" role="alert">
           {erro}
         </p>
       )}
       {!carregando && pedidos.length === 0 && !erro && (
-        <p>
-          Você ainda não fez pedidos. <Link to="/cliente">Ver o cardápio</Link>
-        </p>
+        <div className="vazio" role="status">
+          <span className="icone-vazio" aria-hidden="true">
+            📦
+          </span>
+          <p>
+            Você ainda não fez pedidos. <Link to="/cliente">Ver o cardápio</Link>
+          </p>
+        </div>
       )}
       <ul className="lista">
         {pedidos.map((p) => (
@@ -121,6 +162,11 @@ export function MeusPedidos() {
                 </button>
               </div>
             )}
+            <div className="acoes">
+              <button type="button" className="secundario" onClick={() => pedirDeNovo(p)}>
+                🔁 Pedir de novo
+              </button>
+            </div>
             {p.motivo && <p className="detalhe">Motivo: {p.motivo}</p>}
             {p.estornoRegistrado && <p className="detalhe">Estorno registrado</p>}
             <Historico historico={p.historico} />

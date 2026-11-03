@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { CHAVE_TOKEN } from '../services/api'
+import { Trilha } from '../components/Trilha'
 
 // RJ08 (REQ-061): mostra o JWT do localStorage decodificado, sem biblioteca.
 // base64url -> base64 -> texto UTF-8 -> JSON.
@@ -48,12 +49,12 @@ export function MeuToken() {
       </main>
     )
   }
-
   const exp = typeof payload.exp === 'number' ? payload.exp : null
   const campos = ['sub', 'nome', 'perfil', 'iat', 'exp'] as const
 
   return (
     <main className="pagina">
+      <Trilha para="/" rotulo="início" atual="Meu token" />
       <h1>Meu token</h1>
       <p className="aviso">
         O navegador só <strong>lê</strong> o conteúdo do token: header e payload são apenas base64url. A{' '}

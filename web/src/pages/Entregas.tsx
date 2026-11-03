@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { DisponibilidadeEntrada, Entrega, Entregador, StatusEntrada, Usuario } from '../../../shared/tipos'
 import { Logo } from '../components/Logo'
+import { Trilha } from '../components/Trilha'
 import { useSessao } from '../contexts/SessaoContext'
 import { Historico } from '../components/Historico'
 import { api, mensagemDeErro } from '../services/api'
@@ -69,6 +70,7 @@ export function Entregas() {
         <Logo />
         <h1>Entregas</h1>
       </div>
+      <Trilha para="/" rotulo="início" atual="Entregas" />
       <div className="sub-form">
         <p>
           Situação:{' '}
@@ -90,13 +92,25 @@ export function Entregas() {
         </div>
       </div>
       <p className="detalhe">A lista atualiza sozinha a cada 5 segundos.</p>
-      {carregando && <p>Carregando…</p>}
+      {carregando && (
+        <>
+          <p>Carregando…</p>
+          <div className="skeleton skeleton-bloco" aria-hidden="true" />
+        </>
+      )}
       {erro && (
         <p className="erro" role="alert">
           {erro}
         </p>
       )}
-      {!carregando && entregas.length === 0 && !erro && <p>Nenhuma entrega atribuída a você.</p>}
+      {!carregando && entregas.length === 0 && !erro && (
+        <div className="vazio" role="status">
+          <span className="icone-vazio" aria-hidden="true">
+            🛵
+          </span>
+          <p>Nenhuma entrega atribuída a você.</p>
+        </div>
+      )}
       <ul className="lista">
         {entregas.map(({ pedido: p, endereco: e, bairro, clienteNome, clienteTelefone }) => (
           <li key={p.id} className="pedido">

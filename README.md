@@ -108,7 +108,7 @@ No front: `cd web` e `npm run build` (confere os tipos e gera o build).
 
 ```
 api/             API Express (server.ts), dados (db.json) e testes
-web/             front React + Vite (src/pages, src/components, src/services; imagens em public/)
+web/             front React + Vite (src/pages, src/components, src/services; logo e favicon em public/)
 shared/          tipos TypeScript usados pela API e pelo front
 docs/            contrato da API (docs/api/openapi.v1.yaml) e evidências dos testes
 docs/requisitos/ requisitos do trabalho (PDF)

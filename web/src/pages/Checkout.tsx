@@ -14,6 +14,7 @@ import { useCarrinho } from '../contexts/CarrinhoContext'
 import { api, mensagemDeErro } from '../services/api'
 import { moeda, rotuloPagamento, rotuloStatus } from '../services/formatar'
 import { PEDIDO_MINIMO_PADRAO } from './Carrinho'
+import { Trilha } from '../components/Trilha'
 
 const FORMAS: FormaPagamento[] = ['pix', 'cartao', 'dinheiro']
 
@@ -114,6 +115,7 @@ export function Checkout() {
   if (pedido) {
     return (
       <main className="pagina">
+        <Trilha para="/cliente/pedidos" rotulo="meus pedidos" atual={`Pedido nº ${pedido.id}`} />
         <h1>Pedido nº {pedido.id} criado</h1>
         <p>
           Status: <span className={`status status-${pedido.status}`}>{rotuloStatus[pedido.status]}</span>
@@ -153,18 +155,30 @@ export function Checkout() {
   if (itens.length === 0) {
     return (
       <main className="pagina">
+        <Trilha para="/cliente" rotulo="o cardápio" atual="Checkout" />
         <h1>Checkout</h1>
-        <p>
-          Seu carrinho está vazio. <Link to="/cliente">Ver o cardápio</Link>
-        </p>
+        <div className="vazio" role="status">
+          <span className="icone-vazio" aria-hidden="true">
+            🛒
+          </span>
+          <p>
+            Seu carrinho está vazio. <Link to="/cliente">Ver o cardápio</Link>
+          </p>
+        </div>
       </main>
     )
   }
 
   return (
     <main className="pagina">
+      <Trilha para="/cliente/carrinho" rotulo="o carrinho" atual="Checkout" />
       <h1>Checkout</h1>
-      {carregando && <p>Carregando…</p>}
+      {carregando && (
+        <>
+          <p>Carregando…</p>
+          <div className="skeleton skeleton-bloco" aria-hidden="true" />
+        </>
+      )}
       {fechada && (
         <p className="aviso fechado" role="alert">
           <strong>Fechado.</strong> A loja não está aceitando pedidos agora.

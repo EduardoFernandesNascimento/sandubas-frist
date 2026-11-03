@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import type { Loja } from '../../../shared/tipos'
+import type { Bairro, Loja } from '../../../shared/tipos'
 import { precoUnitario, useCarrinho } from '../contexts/CarrinhoContext'
 import { api } from '../services/api'
 import { moeda } from '../services/formatar'
 import { FotoProduto } from '../components/FotoProduto'
+import { Trilha } from '../components/Trilha'
 
 export const PEDIDO_MINIMO_PADRAO = 10
 
@@ -12,13 +13,19 @@ export const PEDIDO_MINIMO_PADRAO = 10
 export function Carrinho() {
   const { itens, subtotal, alterarQuantidade, remover } = useCarrinho()
   const [loja, setLoja] = useState<Loja | null>(null)
+  const [bairros, setBairros] = useState<Bairro[]>([])
   const navegar = useNavigate()
 
   useEffect(() => {
-    api
-      .get<Loja>('/loja')
-      .then((r) => setLoja(r.data))
-      .catch(() => setLoja(null))
+    Promise.all([api.get<Loja>('/loja'), api.get<Bairro[]>('/bairros')])
+      .then(([l, b]) => {
+        setLoja(l.data)
+        setBairros(b.data)
+      })
+      .catch(() => {
+        setLoja(null)
+        setBairros([])
+      })
   }, [])
 
   const minimo = loja?.pedidoMinimo ?? PEDIDO_MINIMO_PADRAO
@@ -27,11 +34,17 @@ export function Carrinho() {
 
   return (
     <main className="pagina">
+      <Trilha para="/cliente" rotulo="o cardápio" atual="Carrinho" />
       <h1>Carrinho</h1>
       {itens.length === 0 ? (
-        <p>
-          Seu carrinho está vazio. <Link to="/cliente">Ver o cardápio</Link>
-        </p>
+        <div className="vazio" role="status">
+          <span className="icone-vazio" aria-hidden="true">
+            🛒
+          </span>
+          <p>
+            Seu carrinho está vazio. <Link to="/cliente">Ver o cardápio</Link>
+          </p>
+        </div>
       ) : (
         <>
           <ul className="lista">
@@ -83,6 +96,20 @@ export function Carrinho() {
             <p className="aviso fechado" role="alert">
               <strong>Fechado.</strong> A loja não está aceitando pedidos agora.
             </p>
+          )}
+          {bairros.length > 0 && (
+            <section aria-labelledby="titulo-taxas" className="sub-form">
+              <h2 id="titulo-taxas">Taxas de entrega por bairro</h2>
+              <dl className="resumo">
+                {bairros.map((b) => (
+                  <div key={b.id} className="linha-resumo">
+                    <dt>{b.nome}</dt>
+                    <dd>{moeda(b.taxa)}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="detalhe">A taxa é aplicada conforme o bairro do endereço escolhido no checkout.</p>
+            </section>
           )}
           <div className="acoes">
             <Link to="/cliente">Continuar comprando</Link>

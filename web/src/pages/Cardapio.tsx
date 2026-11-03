@@ -84,15 +84,33 @@ export function Cardapio() {
           placeholder="Por nome, descrição ou categoria…"
         />
       </label>
-      {carregando && <p>Carregando…</p>}
+      {carregando && (
+        <>
+          <p>Carregando…</p>
+          <div className="skeleton skeleton-bloco" aria-hidden="true" />
+          <div className="skeleton skeleton-bloco" aria-hidden="true" />
+        </>
+      )}
       {erro && (
         <p className="erro" role="alert">
           {erro}
         </p>
       )}
-      {!carregando && !erro && grupos.length === 0 && <p>Nenhum produto disponível.</p>}
+      {!carregando && !erro && grupos.length === 0 && (
+        <div className="vazio" role="status">
+          <span className="icone-vazio" aria-hidden="true">
+            🍽️
+          </span>
+          <p>Nenhum produto disponível.</p>
+        </div>
+      )}
       {!carregando && !erro && grupos.length > 0 && gruposVisiveis.length === 0 && (
-        <p>Nenhum produto encontrado.</p>
+        <div className="vazio" role="status">
+          <span className="icone-vazio" aria-hidden="true">
+            🔍
+          </span>
+          <p>Nenhum produto encontrado para "{busca}".</p>
+        </div>
       )}
 
       {gruposVisiveis.map((g, n) => (
